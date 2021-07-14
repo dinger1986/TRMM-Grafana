@@ -1,8 +1,6 @@
 # TRMM-Grafana
 
-### Basic setup is are:
-##
-##
+### Basic setup is:
 ##### Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
 ##
 ##
