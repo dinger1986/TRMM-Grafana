@@ -8,7 +8,7 @@
 3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/installg.sh
 4. chmod +x installg.sh
 5. ./installg.sh
-6. Enter your username
+6. Enter your username (the linux user that was used to install tactical, the same user as step 1 hopefully).
 7. Enter the domain for the frontend e.g. rmm.mydomain.com
 8. Enter your full domain e.g. mydomain.com
 9. Go to https://rmm.mydomain.com:3000
@@ -16,6 +16,8 @@
 ##
 Add URL action to Tactical (correct URL will be shown at the end of the script):
 https://rmm.mydomain.com:3000/d/pLkA1-inz/tacticalrmm-dashboard-trmm?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
+
+If you change your dashboard or use a custom one you might need to change the UID for the dashboard from pLkA1-inz to whatever its been changed to.
 ##
 ### Troubleshooting:
 
