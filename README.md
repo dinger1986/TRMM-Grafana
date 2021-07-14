@@ -29,6 +29,11 @@ secureJsonData:
 3. Replace the password for dbreader for postgres with the following command
 4. sudo -u postgres psql tacticalrmm -c "ALTER USER dbreader WITH PASSWORD 'new_password'"
 
+If you have errors on some parts of the Dash but the agent count is working you must select an Agent from the top dropdown. This is by design!
+
+1. Go along the top
+2. Find Agents_HostName and select one from the dropdown
+
 ##
 ### 
 ### Updating Dashboards (incase theres new ones)
