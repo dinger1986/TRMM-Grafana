@@ -5,7 +5,7 @@
 ##
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
-3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/grafanafortactical.sh
+3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/installg.sh
 4. chmod +x grafanafortactical.sh
 5. ./grafanafortactical.sh
 6. Enter your username
@@ -28,3 +28,14 @@ secureJsonData:
   password: ""
 3. Replace the password for dbreader for postgres with the following command
 4. sudo -u postgres psql tacticalrmm -c "ALTER USER dbreader WITH PASSWORD 'new_password'"
+
+### 
+##### Updating Dashboards (incase theres new ones)
+##
+1. Swap to user setup for tactical rmm - e.g. su tactical
+2. Go to home - cd ~/
+3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/updateg.sh
+4. chmod +x updateg.sh
+5. ./updateg.sh
+6. Enter your username
+##
