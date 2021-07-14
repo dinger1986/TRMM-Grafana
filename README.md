@@ -22,7 +22,7 @@ https://rmm.mydomain.com:3000/d/pLkA1-inz/tacticalrmm-dashboard-trmm?orgId=1&var
 
 If you need to rerun the script the only thing that will need redone is changing the postgres dbreader password 
 to the same as is in /etc/grafana/provisioning/datasources/default.yaml
-##
+
 1. To do this type in nano /etc/grafana/provisioning/datasources/default.yaml
 2. Copy password under: 
 secureJsonData:
