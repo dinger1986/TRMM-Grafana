@@ -37,7 +37,8 @@ If you have errors on some parts of the Dash but the agent count is working you 
 ##
 ### 
 ### Updating Dashboards (incase theres new ones)
-##
+### current Dashboards are one for URL actions and one for TV display
+
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
 3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/updateg.sh
