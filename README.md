@@ -6,8 +6,8 @@
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
 3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/installg.sh
-4. chmod +x grafanafortactical.sh
-5. ./grafanafortactical.sh
+4. chmod +x installg.sh
+5. ./installg.sh
 6. Enter your username
 7. Enter the domain for the frontend e.g. rmm.mydomain.com
 8. Enter your full domain e.g. mydomain.com
