@@ -3,7 +3,6 @@
 ### 
 ##### Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
 ##
-##
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
 3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/grafanafortactical.sh
