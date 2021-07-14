@@ -6,7 +6,7 @@
 ##
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
-3. wget https://raw.githubusercontent.com/dinger1986/dvis/master/grafanafortactical.sh
+3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/grafanafortactical.sh
 4. chmod +x grafanafortactical.sh
 5. ./grafanafortactical.sh
 6. Enter your username
