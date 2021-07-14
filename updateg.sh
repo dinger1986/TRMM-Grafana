@@ -50,3 +50,6 @@ sudo rm /var/lib/grafana/dashboards/default.json
 sudo chown -R ${username}:${username} /var/lib/grafana/dashboards
 cd /var/lib/grafana/dashboards
 wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/sebdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/tvdash.json
+
+cd ~/
