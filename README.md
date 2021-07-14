@@ -29,8 +29,9 @@ secureJsonData:
 3. Replace the password for dbreader for postgres with the following command
 4. sudo -u postgres psql tacticalrmm -c "ALTER USER dbreader WITH PASSWORD 'new_password'"
 
+##
 ### 
-##### Updating Dashboards (incase theres new ones)
+### Updating Dashboards (incase theres new ones)
 ##
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
