@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 10,
-  "iteration": 1626425645036,
+  "iteration": 1626425645046,
   "links": [],
   "panels": [
     {
@@ -163,8 +163,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 1,
-        "w": 5,
+        "h": 2,
+        "w": 1,
         "x": 0,
         "y": 2
       },
@@ -213,6 +213,86 @@
           ]
         }
       ],
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 1,
+        "y": 2
+      },
+      "id": 63,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^concat$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes',\r\n          to_char(now() - to_timestamp(boot_time),'SS' ), ' Secondes'\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = $Agents_HostName",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Online since",
       "type": "stat"
     },
     {
@@ -576,7 +656,7 @@
         "h": 2,
         "w": 5,
         "x": 0,
-        "y": 3
+        "y": 4
       },
       "id": 50,
       "options": {
@@ -651,7 +731,7 @@
         "h": 2,
         "w": 5,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 44,
       "options": {
@@ -744,7 +824,7 @@
         "h": 1,
         "w": 2,
         "x": 0,
-        "y": 7
+        "y": 8
       },
       "id": 59,
       "options": {
@@ -835,7 +915,7 @@
         "h": 1,
         "w": 2,
         "x": 3,
-        "y": 7
+        "y": 8
       },
       "id": 61,
       "options": {
@@ -909,7 +989,7 @@
         "h": 2,
         "w": 2,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "id": 39,
       "options": {
@@ -990,7 +1070,7 @@
         "h": 5,
         "w": 3,
         "x": 2,
-        "y": 8
+        "y": 9
       },
       "id": 43,
       "options": {
@@ -1064,7 +1144,7 @@
         "h": 3,
         "w": 2,
         "x": 0,
-        "y": 10
+        "y": 11
       },
       "id": 45,
       "options": {
@@ -1118,7 +1198,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 14
       },
       "id": 47,
       "panels": [],
@@ -1150,7 +1230,7 @@
         "h": 3,
         "w": 2,
         "x": 0,
-        "y": 14
+        "y": 15
       },
       "id": 31,
       "options": {
@@ -1226,7 +1306,7 @@
         "h": 3,
         "w": 6,
         "x": 2,
-        "y": 14
+        "y": 15
       },
       "id": 24,
       "options": {
@@ -1306,7 +1386,7 @@
         "h": 3,
         "w": 8,
         "x": 8,
-        "y": 14
+        "y": 15
       },
       "id": 20,
       "options": {
@@ -1387,7 +1467,7 @@
         "h": 3,
         "w": 8,
         "x": 16,
-        "y": 14
+        "y": 15
       },
       "id": 23,
       "options": {
@@ -1462,7 +1542,7 @@
         "h": 8,
         "w": 5,
         "x": 0,
-        "y": 17
+        "y": 18
       },
       "id": 18,
       "options": {
@@ -1548,7 +1628,7 @@
         "h": 17,
         "w": 6,
         "x": 5,
-        "y": 17
+        "y": 18
       },
       "id": 26,
       "options": {
@@ -1623,7 +1703,7 @@
         "h": 17,
         "w": 7,
         "x": 11,
-        "y": 17
+        "y": 18
       },
       "id": 54,
       "options": {
@@ -1698,7 +1778,7 @@
         "h": 17,
         "w": 6,
         "x": 18,
-        "y": 17
+        "y": 18
       },
       "id": 55,
       "options": {
@@ -1802,7 +1882,7 @@
         "h": 13,
         "w": 9,
         "x": 0,
-        "y": 34
+        "y": 35
       },
       "id": 14,
       "options": {
@@ -1905,7 +1985,7 @@
         "h": 13,
         "w": 15,
         "x": 9,
-        "y": 34
+        "y": 35
       },
       "id": 33,
       "options": {
@@ -2068,5 +2148,5 @@
   "timezone": "",
   "title": "TacticalRMM dashboard TRMM",
   "uid": "pLkA1-inz",
-  "version": 14
+  "version": 16
 }
