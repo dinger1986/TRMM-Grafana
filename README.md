@@ -49,7 +49,6 @@ If you have errors on some parts of the Dash but the agent count is working you 
 6. Enter your username
 ##
 
-##
 ### 
 ### Current Dashboards
 
