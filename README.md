@@ -48,3 +48,13 @@ If you have errors on some parts of the Dash but the agent count is working you 
 5. ./updateg.sh
 6. Enter your username
 ##
+
+##
+### 
+### Current Dashboards
+
+TacticalRMM dashboard TRMM - Dashboard used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on.
+
+TV Dashboard - Showing Agent count, information, Errors and Warnings including messages
+
+##
