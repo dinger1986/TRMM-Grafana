@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 10,
-  "iteration": 1626250517389,
+  "iteration": 1626425645036,
   "links": [],
   "panels": [
     {
@@ -300,7 +300,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory\r\n  WHERE x BETWEEN '2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z'\r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='cpuload')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory\r\n  \r\n  WHERE x BETWEEN $__timeFrom() and $__timeTo() --'2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z'\r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='cpuload')\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -409,7 +409,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n  x BETWEEN '2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z' AND \r\n  check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='memory')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n  x BETWEEN $__timeFrom() AND $__timeTo() AND \r\n  check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='memory')\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -524,7 +524,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n  x BETWEEN '2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z'\r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='diskspace')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n   x BETWEEN $__timeFrom() AND $__timeTo() \r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='diskspace')\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -2011,9 +2011,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "C04-BACALAN",
-          "value": "C04-BACALAN"
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": null,
         "definition": "SELECT \nhostname\nFROM \nagents_agent\n\n\n",
@@ -2068,5 +2068,5 @@
   "timezone": "",
   "title": "TacticalRMM dashboard TRMM",
   "uid": "pLkA1-inz",
-  "version": 11
+  "version": 14
 }
