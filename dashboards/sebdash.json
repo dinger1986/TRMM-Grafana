@@ -2045,7 +2045,7 @@
           ]
         },
         "datasource": null,
-        "definition": "SELECT name FROM clients_client",
+        "definition": "SELECT name FROM clients_client order by name",
         "description": null,
         "error": null,
         "hide": 0,
@@ -2054,7 +2054,7 @@
         "multi": false,
         "name": "Client",
         "options": [],
-        "query": "SELECT name FROM clients_client",
+        "query": "SELECT name FROM clients_client order by name",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
