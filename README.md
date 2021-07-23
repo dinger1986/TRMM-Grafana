@@ -57,5 +57,14 @@ If you have errors on some parts of the Dash but the agent count is working you 
 
 **TacticalRMM-Dashboard-Map:** 
   * Allows you to display a world map with the position of TRMM agents.
+  For use map in Grafana:
+In TRMM
+  1- Add customField: Name = "adressPostal" / type Text
+  2- Add customField: Name = "geohas" / type Text / Hide Dashboard
+  3- Create account for api https://positionstack.com/product
+  4- add script python (and add you keyAPI at the line 14)
+  5- add arguments {{agent.adressPostal}} and {{agent.geohas}} attention the order of the arguments is important
 
+In Grafana
+    1- add news json in grafana
 ##
