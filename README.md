@@ -55,6 +55,7 @@ TacticalRMM dashboard TRMM - Dashboard used for URL actions and Shows CPU, RAM, 
 
 TV Dashboard - Showing Agent count, information, Errors and Warnings including messages
 
-TacticalRMM-Dashboard-Map: Allows you to display a world map with the position of TRMM agents.
+__TacticalRMM-Dashboard-Map: 
+  Allows you to display a world map with the position of TRMM agents.
 
 ##
