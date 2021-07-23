@@ -51,11 +51,11 @@ If you have errors on some parts of the Dash but the agent count is working you 
 ### 
 ### Current Dashboards
 
-TacticalRMM dashboard TRMM - Dashboard used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
+**TacticalRMM dashboard TRMM - Dashboard** used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
 
-TV Dashboard - Showing Agent count, information, Errors and Warnings including messages
+**TV Dashboard** - Showing Agent count, information, Errors and Warnings including messages
 
-__TacticalRMM-Dashboard-Map: 
+**TacticalRMM-Dashboard-Map:** 
   Allows you to display a world map with the position of TRMM agents.
 
 ##
