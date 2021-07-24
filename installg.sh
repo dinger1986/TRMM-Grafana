@@ -145,6 +145,7 @@ sudo chown -R ${username}:${username} /var/lib/grafana/dashboards
 cd /var/lib/grafana/dashboards
 wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/sebdash.json
 wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/tvdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/mapdash.json
 
 cd ~/
 
