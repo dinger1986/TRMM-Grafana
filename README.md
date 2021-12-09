@@ -35,6 +35,9 @@ If you have errors on some parts of the Dash but the agent count is working you 
 1. Go along the top
 2. Find Agents_HostName and select one from the dropdown
 
+Reset Passwords:
+From command line do: `grafana-cli admin reset-admin-password admin`
+
 ##
 ### 
 ### Updating Dashboards (incase theres new ones)
