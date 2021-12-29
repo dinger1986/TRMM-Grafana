@@ -151,10 +151,7 @@
         "pluginVersion": "8.3.1",
         "targets": [
           {
-            "datasource": {
-              "type": "postgres",
-              "uid": "PCC52D03280B7034C"
-            },
+            
             "format": "table",
             "group": [],
             "metricColumn": "none",
@@ -384,10 +381,7 @@
         "pluginVersion": "8.3.1",
         "targets": [
           {
-            "datasource": {
-              "type": "postgres",
-              "uid": "PCC52D03280B7034C"
-            },
+            
             "format": "table",
             "group": [],
             "metricColumn": "none",
@@ -463,10 +457,7 @@
         "pluginVersion": "8.3.1",
         "targets": [
           {
-            "datasource": {
-              "type": "postgres",
-              "uid": "PCC52D03280B7034C"
-            },
+            
             "format": "table",
             "group": [],
             "metricColumn": "none",
@@ -541,10 +532,7 @@
         "pluginVersion": "8.3.1",
         "targets": [
           {
-            "datasource": {
-              "type": "postgres",
-              "uid": "PCC52D03280B7034C"
-            },
+            
             "format": "table",
             "group": [],
             "metricColumn": "none",
@@ -649,10 +637,7 @@
         "pluginVersion": "8.3.1",
         "targets": [
           {
-            "datasource": {
-              "type": "postgres",
-              "uid": "PCC52D03280B7034C"
-            },
+            
             "format": "table",
             "group": [],
             "metricColumn": "none",
@@ -997,10 +982,7 @@
         "pluginVersion": "8.3.1",
         "targets": [
           {
-            "datasource": {
-              "type": "postgres",
-              "uid": "PCC52D03280B7034C"
-            },
+            
             "format": "table",
             "group": [],
             "metricColumn": "none",
