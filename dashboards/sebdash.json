@@ -8,20 +8,55 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 10,
-  "iteration": 1626425645048,
-  "links": [],
+  "id": 16,
+  "iteration": 1649102638317,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "TRMMClientOverview"
+      ],
+      "targetBlank": false,
+      "title": "T-RMM Client Overview",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "TRMMClientMap"
+      ],
+      "targetBlank": false,
+      "title": "T-RMM Client Map",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -34,7 +69,10 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -81,9 +119,13 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -115,7 +157,10 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -182,9 +227,13 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -216,7 +265,10 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -261,9 +313,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -296,7 +352,10 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Track CPU consumption for the selected agent.",
       "fieldConfig": {
         "defaults": {
@@ -370,12 +429,17 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.3",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "time_series",
           "group": [],
           "metricColumn": "none",
@@ -404,11 +468,14 @@
           ]
         }
       ],
-      "title": "CPU Load Check",
+      "title": "CPU Load",
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Track memory consumption for the selected agent.",
       "fieldConfig": {
         "defaults": {
@@ -479,12 +546,17 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.3",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "time_series",
           "group": [],
           "metricColumn": "none",
@@ -517,7 +589,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Track disk consumption for the selected agent.",
       "fieldConfig": {
         "defaults": {
@@ -594,12 +669,17 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.3",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "time_series",
           "group": [],
           "metricColumn": "none",
@@ -628,11 +708,14 @@
           ]
         }
       ],
-      "title": "Disk Usage",
+      "title": "Drive Usage",
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Type of CPU installed",
       "fieldConfig": {
         "defaults": {
@@ -672,9 +755,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -707,7 +794,10 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Agent bone type",
       "fieldConfig": {
         "defaults": {
@@ -749,14 +839,18 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bits') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = $Agents_HostName\r\n",
+          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bit') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = $Agents_HostName\r\n",
           "refId": "A",
           "select": [
             [
@@ -783,7 +877,10 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -840,9 +937,13 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -874,7 +975,10 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -931,9 +1035,13 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -965,7 +1073,10 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Total Agent Memory",
       "fieldConfig": {
         "defaults": {
@@ -1007,14 +1118,18 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n   concat((total_ram),'Gb / ',concat(wmi_detail->'mem'->0->0->>'Speed','Bits'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agents_HostName",
           "refId": "A",
           "select": [
             [
@@ -1038,11 +1153,14 @@
           ]
         }
       ],
-      "title": "Total_Ram",
+      "title": "System Ram",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Total free disk space",
       "fieldConfig": {
         "defaults": {
@@ -1074,11 +1192,22 @@
       },
       "id": 43,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": false
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1107,11 +1236,14 @@
           ]
         }
       ],
-      "title": "Disk",
+      "title": "Available Disk Space",
       "type": "table"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1158,9 +1290,13 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1193,7 +1329,6 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1206,7 +1341,10 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Number of clients connected to TRMM",
       "fieldConfig": {
         "defaults": {
@@ -1248,9 +1386,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1279,11 +1421,14 @@
           ]
         }
       ],
-      "title": "Customer",
+      "title": "Clients",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1324,9 +1469,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1355,11 +1504,14 @@
           ]
         }
       ],
-      "title": "Informations",
+      "title": "Information Alerts",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1404,9 +1556,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1435,11 +1591,14 @@
           ]
         }
       ],
-      "title": "Warning",
+      "title": "Warning Alerts",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1485,9 +1644,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1516,11 +1679,14 @@
           ]
         }
       ],
-      "title": "Error",
+      "title": "Error Alerts",
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1566,17 +1732,22 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.3",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  select (\r\nSELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '64' and\r\n  site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"64 Bits\",\r\n\r\n  (SELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '32' and\r\n   site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"32 Bits\" ",
+          "rawSql": "  select (\r\nSELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '64' and\r\n  site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"64 Bit\",\r\n\r\n  (SELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '32' and\r\n   site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"32 Bit\" ",
           "refId": "A",
           "select": [
             [
@@ -1600,16 +1771,20 @@
           ]
         }
       ],
-      "title": "OS distribution",
+      "title": "OS Distribution",
       "type": "piechart"
     },
     {
-      "datasource": null,
-      "description": "List all Windows installed",
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "List all OS installed",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
           },
           "mappings": [],
           "thresholds": {
@@ -1632,21 +1807,25 @@
       },
       "id": 26,
       "options": {
-        "displayMode": "gradient",
+        "displayMode": "basic",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1675,16 +1854,21 @@
           ]
         }
       ],
-      "title": "Windows type",
+      "title": "OS Type",
+      "transformations": [],
       "type": "bargauge"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "List all installed processors",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
           },
           "mappings": [],
           "thresholds": {
@@ -1707,21 +1891,25 @@
       },
       "id": 54,
       "options": {
-        "displayMode": "gradient",
+        "displayMode": "basic",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
@@ -1754,12 +1942,16 @@
       "type": "bargauge"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "List all installed memory",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd"
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
           },
           "mappings": [],
           "thresholds": {
@@ -1782,26 +1974,30 @@
       },
       "id": 55,
       "options": {
-        "displayMode": "gradient",
+        "displayMode": "basic",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  concat((total_ram),' Gb') as \"Size Memory\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE\r\n site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Size Memory\"\r\nOrder by \"count\" desc\r\n  ",
+          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  concat((total_ram),' GB') as \"Size Memory\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE\r\n site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Size Memory\"\r\nOrder by \"Size Memory\" desc\r\n  ",
           "refId": "A",
           "select": [
             [
@@ -1825,11 +2021,14 @@
           ]
         }
       ],
-      "title": "Memory type",
+      "title": "Installed System RAM",
       "type": "bargauge"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "description": "Number of clients connected to TRMM",
       "fieldConfig": {
         "defaults": {
@@ -1871,8 +2070,7 @@
             },
             "properties": [
               {
-                "id": "custom.width",
-                "value": null
+                "id": "custom.width"
               }
             ]
           }
@@ -1886,6 +2084,13 @@
       },
       "id": 14,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1894,14 +2099,18 @@
           }
         ]
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  clients_site.name AS \"Site\",\r\n  hostname AS \"Hostname\",\r\n  description as \"description\",\r\n  last_seen AS \"Last Response\",\r\n  to_timestamp(boot_time) AS \"Last Reboot\"\r\nFROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE \r\nsite_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))",
+          "rawSql": "SELECT \r\n  clients_site.name AS \"Site\",\r\n  hostname AS \"Hostname\",\r\n  description as \"Description\",\r\n  last_seen AS \"Last Response\",\r\n  to_timestamp(boot_time) AS \"Last Reboot\"\r\nFROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE \r\nsite_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))",
           "refId": "A",
           "select": [
             [
@@ -1929,7 +2138,10 @@
       "type": "table"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1978,6 +2190,18 @@
                 "value": 117
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 190
+              }
+            ]
           }
         ]
       },
@@ -1989,17 +2213,28 @@
       },
       "id": 33,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.4.5",
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  alert_time as \"Date Message\",\r\n  alerts_alert.severity,\r\n  message as \"Messages\"\r\n  FROM alerts_alert\r\nWHERE \r\n alerts_alert.severity = '$Message_Severity'\r\n AND alerts_alert.resolved = false",
+          "rawSql": "SELECT \r\n  alert_time as \"Date Message\",\r\n  alerts_alert.severity as \"Severity\",\r\n  message as \"Messages\"\r\n  FROM alerts_alert\r\nWHERE \r\n alerts_alert.severity = '$Message_Severity'\r\n AND alerts_alert.resolved = false",
           "refId": "A",
           "select": [
             [
@@ -2023,34 +2258,31 @@
           ]
         }
       ],
-      "title": "Error message",
+      "title": "Error Messages",
       "type": "table"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 30,
+  "refresh": "",
+  "schemaVersion": 35,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "TRMMAgentDashboard"
+  ],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
         "definition": "SELECT name FROM clients_client order by name",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "Client",
         "options": [],
@@ -2065,19 +2297,18 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
         "definition": "SELECT name FROM clients_site",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "Sites",
         "options": [],
@@ -2089,23 +2320,22 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
-          "selected": true,
-          "text": "170474-SRV",
-          "value": "170474-SRV"
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
-        "datasource": null,
-        "definition": "SELECT \nhostname\nFROM \nagents_agent\n\n\n",
-        "description": null,
-        "error": null,
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
+        "definition": "SELECT \nhostname\nFROM \nagents_agent\n\n",
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "Agents_HostName",
         "options": [],
-        "query": "SELECT \nhostname\nFROM \nagents_agent\n\n\n",
+        "query": "SELECT \nhostname\nFROM \nagents_agent\n\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2113,19 +2343,19 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "error",
-          "value": "error"
+          "text": "None",
+          "value": ""
         },
-        "datasource": null,
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
         "definition": "SELECT \nalerts_alert.severity\n  FROM alerts_alert",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "Message_Severity",
         "options": [],
@@ -2135,6 +2365,23 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "TacticalRMM",
+          "value": "TacticalRMM"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "Tactical",
+        "options": [],
+        "query": "postgres",
+        "refresh": 1,
+        "regex": "TacticalRMM",
+        "skipUrlSync": false,
+        "type": "datasource"
       }
     ]
   },
@@ -2146,7 +2393,8 @@
     "hidden": false
   },
   "timezone": "",
-  "title": "TacticalRMM dashboard TRMM",
+  "title": "TacticalRMM Agent dashboard",
   "uid": "pLkA1-inz",
-  "version": 17
+  "version": 6,
+  "weekStart": ""
 }
