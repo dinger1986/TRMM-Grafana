@@ -21,9 +21,38 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 10,
-  "iteration": 1649084327785,
-  "links": [],
+  "id": 16,
+  "iteration": 1649102638317,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "TRMMClientOverview"
+      ],
+      "targetBlank": false,
+      "title": "T-RMM Client Overview",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "TRMMClientMap"
+      ],
+      "targetBlank": false,
+      "title": "T-RMM Client Map",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
   "liveNow": false,
   "panels": [
     {
@@ -1868,7 +1897,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
@@ -1951,7 +1980,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
@@ -2236,7 +2265,9 @@
   "refresh": "",
   "schemaVersion": 35,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "TRMMAgentDashboard"
+  ],
   "templating": {
     "list": [
       {
@@ -2313,6 +2344,7 @@
       },
       {
         "current": {
+          "isNone": true,
           "selected": false,
           "text": "None",
           "value": ""
@@ -2361,8 +2393,8 @@
     "hidden": false
   },
   "timezone": "",
-  "title": "TacticalRMM dashboard TRMM",
+  "title": "TacticalRMM Agent dashboard",
   "uid": "pLkA1-inz",
-  "version": 11,
+  "version": 6,
   "weekStart": ""
 }
