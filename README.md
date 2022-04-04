@@ -14,7 +14,7 @@
 10. Go to dashboards and copy the dashboard to reconfigure how you want it or keep it as default
 ##
 Add URL action to Tactical (correct URL will be shown at the end of the script):
-https://rmm.mydomain.com:3000/d/pLkA1-inz/tacticalrmm-dashboard-trmm?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
+https://rmm.mydomain.com:3000/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
 
 If you change your dashboard or use a custom one you might need to change the UID for the dashboard from pLkA1-inz to whatever its been changed to.
 ##
