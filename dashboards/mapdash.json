@@ -8,16 +8,23 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 12,
-  "iteration": 1627049570451,
+  "id": 5,
+  "iteration": 1649038569136,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "circleMaxSize": "5",
@@ -28,7 +35,10 @@
         "#FA6400",
         "rgba(0,0,0,0)"
       ],
-      "datasource": null,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
       "decimals": 0,
       "esGeoPoint": "location",
       "esLocationName": "nameAgent",
@@ -60,11 +70,15 @@
       },
       "targets": [
         {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  agents_agentcustomfield.string_value AS \"location\",\r\n  concat(agents_agent.hostname, ' / ', agents_agent.description) as \"nameAgent\",\r\n  greatest (\r\n  CASE\r\n         --WHEN  CAST(substring(stdout from '\\, failing: (.+)\\, warning') AS DECIMAL ) = 1 THEN 201\r\n         WHEN  CAST(substring(stdout from '\\, failing: (.+)\\, warning') AS DECIMAL ) = 0 THEN 0\r\n        ELSE 100\r\n      END,\r\n   CASE\r\n         --WHEN CAST(substring(stdout from '\\warning: (.+)\\, info') AS DECIMAL ) = 1 THEN 101\r\n         WHEN CAST(substring(stdout from '\\warning: (.+)\\, info') AS DECIMAL ) = 0 THEN 0\r\n        ELSE 200\r\n      END\r\n  ) as \"finalState\"\r\nFROM\r\n  checks_check,\r\n  agents_agent\r\n  INNER JOIN clients_site on site_id = clients_site.id\r\n  LEFT OUTER JOIN agents_agentcustomfield on agents_agent.id = agents_agentcustomfield.agent_id\r\n  LEFT OUTER JOIN core_customfield on agents_agentcustomfield.field_id = core_customfield.id\r\nWHERE\r\n  (field_id IN (SELECT id FROM core_customfield WHERE name = 'geohas')\r\n  OR field_id is null)\r\n  and agents_agentcustomfield.string_value <> ''\r\n  and checks_check.agent_id = agents_agent.id\r\n  AND site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\n",
+          "rawSql": "SELECT\r\n  agents_agentcustomfield.string_value AS \"location\",\r\n  concat(agents_agent.hostname, ' / ', agents_agent.description) as \"nameAgent\",\r\n  greatest (\r\n  CASE\r\n         --WHEN  CAST(substring(stdout from '\\, failing: (.+)\\, warning') AS DECIMAL ) = 1 THEN 201\r\n         WHEN  CAST(substring(stdout from '\\, failing: (.+)\\, warning') AS DECIMAL ) = 0 THEN 0\r\n        ELSE 100\r\n      END,\r\n   CASE\r\n         --WHEN CAST(substring(stdout from '\\warning: (.+)\\, info') AS DECIMAL ) = 1 THEN 101\r\n         WHEN CAST(substring(stdout from '\\warning: (.+)\\, info') AS DECIMAL ) = 0 THEN 0\r\n        ELSE 200\r\n      END\r\n  ) as \"finalState\"\r\nFROM\r\n  checks_check,\r\n  agents_agent\r\n  INNER JOIN clients_site on site_id = clients_site.id\r\n  LEFT OUTER JOIN agents_agentcustomfield on agents_agent.id = agents_agentcustomfield.agent_id\r\n  LEFT OUTER JOIN core_customfield on agents_agentcustomfield.field_id = core_customfield.id\r\nWHERE\r\n  (field_id IN (SELECT id FROM core_customfield WHERE name = 'geohas')\r\n  OR field_id is null)\r\n  and agents_agentcustomfield.string_value <> ''\r\n  and checks_check.agent_id = agents_agent.id\r\n  AND site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))",
           "refId": "A",
           "select": [
             [
@@ -89,7 +103,7 @@
         }
       ],
       "thresholds": "1,101,201",
-      "title": "Panel Title",
+      "title": "Client Locations",
       "type": "grafana-worldmap-panel",
       "unitPlural": "",
       "unitSingle": "",
@@ -97,13 +111,12 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 30,
+  "schemaVersion": 35,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": [
@@ -113,13 +126,13 @@
             "$__all"
           ]
         },
-        "datasource": null,
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
         "definition": "SELECT name FROM clients_client",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "Client",
         "options": [],
@@ -134,19 +147,18 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
         "definition": "SELECT name FROM clients_site",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "Sites",
         "options": [],
@@ -156,6 +168,23 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "TacticalRMM",
+          "value": "TacticalRMM"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "Tactical",
+        "options": [],
+        "query": "postgres",
+        "refresh": 1,
+        "regex": "TacticalRMM",
+        "skipUrlSync": false,
+        "type": "datasource"
       }
     ]
   },
@@ -169,5 +198,6 @@
   "timezone": "",
   "title": "TacticalRMM dashboard MAP",
   "uid": "7OmubVW7k",
-  "version": 9
+  "version": 4,
+  "weekStart": ""
 }
