@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 7,
-  "iteration": 1649097945662,
+  "iteration": 1649099784714,
   "links": [
     {
       "asDropdown": false,
@@ -1249,7 +1249,7 @@
     {
       "datasource": {
         "type": "postgres",
-        "uid": "Ei7r1ls7z"
+        "uid": "${Tactical}"
       },
       "description": "",
       "fieldConfig": {
@@ -1298,7 +1298,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "Ei7r1ls7z"
+            "uid": "${Tactical}"
           },
           "format": "table",
           "group": [],
@@ -1343,8 +1343,8 @@
       {
         "current": {
           "selected": false,
-          "text": "RuffusFamily",
-          "value": "RuffusFamily"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "postgres",
@@ -1369,8 +1369,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Home",
-          "value": "Home"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "postgres",
@@ -1430,6 +1430,6 @@
   "timezone": "browser",
   "title": "T-RMM Client Overview",
   "uid": "cagnefi7z",
-  "version": 34,
+  "version": 36,
   "weekStart": ""
 }
