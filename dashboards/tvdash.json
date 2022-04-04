@@ -21,19 +21,35 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1649081676720,
+  "id": 17,
+  "iteration": 1649103215099,
   "links": [
     {
       "asDropdown": false,
       "icon": "external link",
-      "includeVars": false,
+      "includeVars": true,
       "keepTime": false,
-      "tags": [],
+      "tags": [
+        "TRMMClientMap"
+      ],
       "targetBlank": false,
-      "title": "New link",
+      "title": "T-RMM Client Map",
       "tooltip": "",
-      "type": "link",
+      "type": "dashboards",
+      "url": ""
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "TRMMAgentDashboard"
+      ],
+      "targetBlank": false,
+      "title": "T-RMM Agent Dashboard",
+      "tooltip": "",
+      "type": "dashboards",
       "url": ""
     }
   ],
@@ -733,7 +749,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
@@ -818,7 +834,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "/^count$/",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
@@ -903,7 +919,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "",
+          "fields": "/.*/",
           "values": true
         },
         "showUnfilled": true,
@@ -953,7 +969,9 @@
   "refresh": "30s",
   "schemaVersion": 35,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "TRMMClientOverview"
+  ],
   "templating": {
     "list": [
       {
@@ -1044,8 +1062,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "TV Dashboard",
+  "title": "TacticalRMM Client Dashboard",
   "uid": "cagnefi7z",
-  "version": 4,
+  "version": 8,
   "weekStart": ""
 }
