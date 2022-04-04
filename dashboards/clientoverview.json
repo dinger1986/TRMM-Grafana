@@ -22,8 +22,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 13,
-  "iteration": 1649099888911,
+  "id": 7,
+  "iteration": 1649103047404,
   "links": [
     {
       "asDropdown": false,
@@ -34,7 +34,7 @@
         "TRMMAgentDashboard"
       ],
       "targetBlank": false,
-      "title": "Agent Dashboard",
+      "title": "T-RMM Agent Dashboard",
       "tooltip": "",
       "type": "dashboards",
       "url": ""
@@ -66,7 +66,7 @@
       },
       "id": 47,
       "panels": [],
-      "title": "Tactical RMM Information",
+      "title": "T-RMM Client/Site Information",
       "type": "row"
     },
     {
@@ -1115,7 +1115,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "/.*/",
+          "fields": "/^count$/",
           "values": true
         },
         "showUnfilled": true,
@@ -1200,7 +1200,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "/.*/",
+          "fields": "/^count$/",
           "values": true
         },
         "showUnfilled": true,
@@ -1285,7 +1285,7 @@
           "calcs": [
             "last"
           ],
-          "fields": "/.*/",
+          "fields": "",
           "values": true
         },
         "showUnfilled": true,
@@ -1430,6 +1430,6 @@
   "timezone": "browser",
   "title": "T-RMM Client Overview",
   "uid": "cagnefi7z",
-  "version": 2,
+  "version": 41,
   "weekStart": ""
 }
