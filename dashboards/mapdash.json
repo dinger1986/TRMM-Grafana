@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 15,
-  "iteration": 1649102183606,
+  "iteration": 1649103127231,
   "links": [
     {
       "asDropdown": false,
@@ -149,13 +149,9 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "postgres",
@@ -227,8 +223,8 @@
     "hidden": false
   },
   "timezone": "",
-  "title": "TacticalRMM dashboard MAP",
+  "title": "TacticalRMM Map Dashboard",
   "uid": "7OmubVW7k",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
