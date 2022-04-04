@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 8,
-  "iteration": 1649037326721,
+  "iteration": 1649082007803,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -42,7 +42,7 @@
     {
       "datasource": {
         "type": "postgres",
-        "uid": "Ei7r1ls7z"
+        "uid": "${Tactical}"
       },
       "fieldConfig": {
         "defaults": {
@@ -95,7 +95,7 @@
         {
           "datasource": {
             "type": "postgres",
-            "uid": "Ei7r1ls7z"
+            "uid": "${Tactical}"
           },
           "format": "table",
           "group": [],
@@ -295,7 +295,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours ',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes ',\r\n          to_char(now() - to_timestamp(boot_time),'SS' ), ' Seconds'\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = $Agents_HostName",
+          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes',\r\n          to_char(now() - to_timestamp(boot_time),'SS' ), ' Secondes'\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = $Agents_HostName",
           "refId": "A",
           "select": [
             [
@@ -679,7 +679,7 @@
           ]
         }
       ],
-      "title": "Disk Usage",
+      "title": "Drive Usage",
       "type": "timeseries"
     },
     {
@@ -821,7 +821,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bit') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bit') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = $Agents_HostName\r\n",
           "refId": "A",
           "select": [
             [
@@ -1017,7 +1017,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Statut\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Statut\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = $Agents_HostName\n",
           "refId": "A",
           "select": [
             [
@@ -1124,7 +1124,7 @@
           ]
         }
       ],
-      "title": "Total Ram",
+      "title": "System Ram",
       "type": "stat"
     },
     {
@@ -1207,7 +1207,7 @@
           ]
         }
       ],
-      "title": "Disk",
+      "title": "Available Disk Space",
       "type": "table"
     },
     {
@@ -1272,7 +1272,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agents_HostName\r\n",
           "refId": "A",
           "select": [
             [
@@ -1392,7 +1392,7 @@
           ]
         }
       ],
-      "title": "Total Clients",
+      "title": "Clients",
       "type": "stat"
     },
     {
@@ -1718,7 +1718,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  select (\r\nSELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '64' and\r\n  site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"64 Bits\",\r\n\r\n  (SELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '32' and\r\n   site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"32 Bits\" ",
+          "rawSql": "  select (\r\nSELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '64' and\r\n  site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"64 Bit\",\r\n\r\n  (SELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '32' and\r\n   site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"32 Bit\" ",
           "refId": "A",
           "select": [
             [
@@ -1742,7 +1742,7 @@
           ]
         }
       ],
-      "title": "OS Distributions - 32/64 bit",
+      "title": "OS Distribution",
       "type": "piechart"
     },
     {
@@ -1750,7 +1750,7 @@
         "type": "postgres",
         "uid": "${Tactical}"
       },
-      "description": "List all operating systems installed",
+      "description": "List all OS installed",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1800,7 +1800,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  SUBSTRING(agents_agent.operating_system,'(.*)bit') AS \"Operating System\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Operating System\"\r\nOrder by \"count\" desc",
+          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  SUBSTRING(agents_agent.operating_system,'(.*)bit') AS \"Operating System\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Operating System\"\r\nOrder by \"Operating System\" desc\r\n  ",
           "refId": "A",
           "select": [
             [
@@ -1824,7 +1824,7 @@
           ]
         }
       ],
-      "title": "OS Distributions - Type",
+      "title": "OS Type",
       "type": "bargauge"
     },
     {
@@ -1882,7 +1882,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  wmi_detail->'cpu'->0->0->>'Name' as \"CPU Name\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"CPU Name\"\r\nOrder by \"count\" desc",
+          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  wmi_detail->'cpu'->0->0->>'Name' as \"CPU Name\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"CPU Name\"\r\nOrder by \"count\" desc\r\n  ",
           "refId": "A",
           "select": [
             [
@@ -1906,7 +1906,7 @@
           ]
         }
       ],
-      "title": "Processor types",
+      "title": "Processor type",
       "type": "bargauge"
     },
     {
@@ -1964,7 +1964,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  concat((total_ram),' Gb') as \"Size Memory\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE\r\n site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Size Memory\"\r\nOrder by \"count\" desc",
+          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  concat((total_ram),' GB') as \"Size Memory\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE\r\n site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Size Memory\"\r\nOrder by \"Size Memory\" desc\r\n  ",
           "refId": "A",
           "select": [
             [
@@ -1988,7 +1988,7 @@
           ]
         }
       ],
-      "title": "Installed RAM Sizes",
+      "title": "Installed System RAM",
       "type": "bargauge"
     },
     {
@@ -2157,6 +2157,18 @@
                 "value": 117
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 190
+              }
+            ]
           }
         ]
       },
@@ -2213,7 +2225,7 @@
           ]
         }
       ],
-      "title": "Error messages",
+      "title": "Error Messages",
       "type": "table"
     }
   ],
@@ -2225,9 +2237,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "RuffusFamily",
-          "value": "RuffusFamily"
+          "selected": true,
+          "text": "RaNC",
+          "value": "RaNC"
         },
         "datasource": {
           "type": "postgres",
@@ -2251,9 +2263,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "Home",
-          "value": "Home"
+          "selected": true,
+          "text": "KHomeOffice",
+          "value": "KHomeOffice"
         },
         "datasource": {
           "type": "postgres",
@@ -2274,21 +2286,21 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "ninjamonkey-ran",
-          "value": "ninjamonkey-ran"
+          "selected": true,
+          "text": "QB-VM",
+          "value": "QB-VM"
         },
         "datasource": {
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT \nhostname\nFROM \nagents_agent\n",
+        "definition": "SELECT \nhostname\nFROM \nagents_agent\n\n",
         "hide": 0,
         "includeAll": true,
         "multi": false,
         "name": "Agents_HostName",
         "options": [],
-        "query": "SELECT \nhostname\nFROM \nagents_agent\n",
+        "query": "SELECT \nhostname\nFROM \nagents_agent\n\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2348,6 +2360,6 @@
   "timezone": "",
   "title": "TacticalRMM dashboard TRMM",
   "uid": "pLkA1-inz",
-  "version": 19,
+  "version": 9,
   "weekStart": ""
 }
