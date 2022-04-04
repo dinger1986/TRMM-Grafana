@@ -1354,8 +1354,8 @@
       {
         "current": {
           "selected": true,
-          "text": "RuffusFamily",
-          "value": "RuffusFamily"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "postgres",
@@ -1380,8 +1380,8 @@
       {
         "current": {
           "selected": true,
-          "text": "Home",
-          "value": "Home"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "postgres",
@@ -1403,8 +1403,8 @@
       {
         "current": {
           "selected": true,
-          "text": "ninjamonkey-ran",
-          "value": "ninjamonkey-ran"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "postgres",
