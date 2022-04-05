@@ -1,3 +1,9 @@
+# TRMM-Grafana Setup methods:
+
+## Baremetal
+
+## Docker
+
 # TRMM-Grafana Basic baremetal setup is:
 
 ###
