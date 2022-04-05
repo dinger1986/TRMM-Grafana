@@ -80,5 +80,91 @@ From command line do: `grafana-cli admin reset-admin-password admin`
 In Grafana
   1. add news json in grafana
 ##
-
 # Docker setup:
+
+**Assumes existing and in use Tactical and Prometheus/Grafana stacks via docker-compose/Portainer.**
+
+**Network names in the compose files need to be edited to suit your install.**
+
+##
+### Edit Tactical docker-compose to specify postgres IP address
+
+```text
+networks:
+  api-db:
+    ipv4_address: ${POSTGRES_IP}
+```
+Either assign the IP manually to what it is currently assigned or use an env variable.
+
+##
+### Edit Grafana docker-compose to add tactical api network
+
+Under network definitions:
+```text
+tacticalrmm_api-db:
+  external: true
+```
+In the grafana service definition:
+```text
+networks:
+  monitor-net:
+    ipv4_address: ${GRAFANA_IP}
+  tacticalrmm_api-db:
+```
+##
+### Add tacticalrmm data source
+Add postgresql data source to Grafana (for now use the tactical user and pass in t-rmm docker-compose config). Edit to suit your configuration, but the Name field MUST be TacticalRMM:
+
+Name: TacticalRMM
+Host: postgres-ip:5432
+Database: tacticalrmm
+User: tactical
+Password: postgrespass
+Disable TLS/SSL and “Save & test”
+
+![Screenshot 2022-04-03 083232](https://user-images.githubusercontent.com/24654529/161432437-d67bb2a8-1e61-4c89-acd4-5c5f5decc6c1.png)
+
+##
+### Add dashboards to Grafana
+Open your Grafana instance in your browser.
+Begin importing the new dashboards by copying and pasting the json code for each, or downloading the files and importing the jsons directly.
+
+Only use one set of dashboards, you cannot try both sets at the same time without editing the UIDs for one of the sets.
+ 
+**Original Dashboards:**
+
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/mapdash.json
+
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/sebdash.json
+
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/tvdash.json
+
+**Alternate Dashboards:**
+
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/clientmap.json
+
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/agentdash.json
+
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/clientoverview.json
+
+![Screenshot 2022-04-03 102115](https://user-images.githubusercontent.com/24654529/161435055-d0cb80a8-aad9-4baf-9b74-625ab333023e.png)
+
+Leave the UID and names as they are, and import them. Ignore the complaints in my screenshot, I already performed this step.
+
+![Screenshot 2022-04-03 102451](https://user-images.githubusercontent.com/24654529/161435289-9935d9e2-90a1-42fe-b89e-95e91e9dc249.png)
+
+**Important! You must enable cpu, disk, and ram checks for the agents you want to monitor.**
+
+##
+### Create a URL action for the TacticalRMM Agent dashboard in TacticalRMM Global Settings, only edit the domain to your grafana domain:
+
+Original:
+URL Pattern: https://grafana.domain.tld/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
+
+Alternate:
+URL Pattern: https://grafana.domain.tld/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
+
+Now you should be able to select a client and run the URL action to open the Grafana T-RMM Agent dashboard and browse to the others via the embedded links.
+
+## Important
+When updating T-RMM Docker images, you'll need to stop the Grafana stack first, as it's tied into the T-RMM network, or the T-RMM stack will not properly stop. After updating, bring up T-RMM first, then Grafana.
