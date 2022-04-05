@@ -60,6 +60,8 @@ From command line do: `grafana-cli admin reset-admin-password admin`
 ### 
 ### Current Dashboards
 
+All dashboards have been updated with links to easily switch between them after initial connection to the Agent dashboard.
+
 **TacticalRMM Agent Dashboard** - Used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
 
 **TacticalRMM Client Dashboard** - Showing Agent count, Information, Errors, and Warnings, including messages.
