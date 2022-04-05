@@ -57,13 +57,10 @@ From command line do: `grafana-cli admin reset-admin-password admin`
 6. Enter your username
 ##
 
-# Docker setup:
-
-
 ### 
 # Current Dashboards
 
-All dashboards have been updated with links to easily switch between them after initial connection to the Agent dashboard.
+**All dashboards have been updated with links to easily switch between them after initial connection to the Agent dashboard.**
 
 **TacticalRMM Agent Dashboard** - Used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
 
@@ -78,8 +75,10 @@ All dashboards have been updated with links to easily switch between them after 
   2. Add customField: Name = "geohas" / type Text / Hide Dashboard
   3. Create account for api https://positionstack.com/product
   4. add script python (and add you keyAPI at the line 14) [Download Script](https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/a8e19f8a286cda043d8b06cac9592ee197c2dea2/Scripts/Map_getCoordinates.py)	
-  5. add arguments {{agent.adressPostal}} and {{agent.geohas}} Warning the order of the arguments is important
+  5. add arguments {{agent.adressPostal}} and {{agent.geohas}} **Warning** The order of the arguments is important!
 
 In Grafana
   1. add news json in grafana
 ##
+
+# Docker setup:
