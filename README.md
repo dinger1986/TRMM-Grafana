@@ -57,11 +57,11 @@ From command line do: `grafana-cli admin reset-admin-password admin`
 6. Enter your username
 ##
 
-### Docker setup:
+# Docker setup:
 
 
 ### 
-### Current Dashboards
+# Current Dashboards
 
 All dashboards have been updated with links to easily switch between them after initial connection to the Agent dashboard.
 
