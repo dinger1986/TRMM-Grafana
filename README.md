@@ -2,7 +2,7 @@
 
 ## [Baremetal](#trmm-grafana-basic-baremetal-setup-is)
 
-## Docker
+## [Docker](#docker-setup)
 
 # TRMM-Grafana Basic baremetal setup is:
 
