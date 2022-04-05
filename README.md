@@ -57,7 +57,8 @@ From command line do: `grafana-cli admin reset-admin-password admin`
 6. Enter your username
 ##
 
-### Docker install:
+### Docker setup:
+
 
 ### 
 ### Current Dashboards
