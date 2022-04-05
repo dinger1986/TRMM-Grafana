@@ -1,6 +1,6 @@
-# TRMM-Grafana Basic setup is:
+# TRMM-Grafana Basic baremetal setup is:
 
-### 
+###
 
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
