@@ -112,17 +112,44 @@ networks:
   tacticalrmm_api-db:
 ```
 ##
+### Create a read-only PostgreSQL user for the tacticalrmm database
+
+Log into the Docker host system.
+
+Log into the Docker Postgres container:
+```text
+sudo docker exec -it trmm-postgres bash
+```
+Log into tacticalrmm database as tactical:
+```text
+psql tacticalrmm tactical
+```
+Run the following commands to add dbreader user, generate and store password for dbreader user before proceeding:
+```text
+CREATE ROLE dbreader WITH LOGIN PASSWORD 'dbreaderpass';
+GRANT CONNECT ON DATABASE tacticalrmm TO dbreader;
+GRANT USAGE ON SCHEMA public to dbreader;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO dbreader;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO dbreader;
+quit
+```
+Exit container and log off host.
+```text
+exit
+exit
+```
+##
 ### Add tacticalrmm data source
 Add postgresql data source to Grafana (for now use the tactical user and pass in t-rmm docker-compose config). Edit to suit your configuration, but the Name field MUST be TacticalRMM:
 
 Name: TacticalRMM
 Host: postgres-ip:5432
 Database: tacticalrmm
-User: tactical
-Password: postgrespass
+User: dbreader
+Password: dbreaderpass
 Disable TLS/SSL and “Save & test”
 
-![Screenshot 2022-04-03 083232](https://user-images.githubusercontent.com/24654529/161432437-d67bb2a8-1e61-4c89-acd4-5c5f5decc6c1.png)
+![Screenshot 2022-04-06 114312](https://user-images.githubusercontent.com/24654529/162025454-19f4a86d-732b-4d76-b2f8-ad38d07e386d.png)
 
 ##
 ### Add dashboards to Grafana
