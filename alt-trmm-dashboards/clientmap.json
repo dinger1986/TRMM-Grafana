@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 5,
-  "iteration": 1649103527672,
+  "iteration": 1649349805122,
   "links": [
     {
       "asDropdown": false,
@@ -150,7 +150,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -184,13 +184,13 @@
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT name FROM clients_site",
+        "definition": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "hide": 0,
         "includeAll": true,
         "multi": false,
         "name": "Sites",
         "options": [],
-        "query": "SELECT name FROM clients_site",
+        "query": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -226,6 +226,6 @@
   "timezone": "",
   "title": "T-RMM Client Map",
   "uid": "7OmubVW7k",
-  "version": 9,
+  "version": 12,
   "weekStart": ""
 }
