@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 16,
-  "iteration": 1649102638317,
+  "id": 13,
+  "iteration": 1649354567914,
   "links": [
     {
       "asDropdown": false,
@@ -130,7 +130,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select \n  concat('Site: ',clients_site.name,' / HostName: ', agents_agent.hostname,' ',agents_agent.DESCRIPTION)\nfrom \n  agents_agent\n  LEFT OUTER JOIN clients_site on agents_agent.site_id = clients_site.id\n  where \n    agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select \n  concat('Site: ',clients_site.name,' / HostName: ', agents_agent.hostname,' ',agents_agent.DESCRIPTION)\nfrom \n  agents_agent\n  LEFT OUTER JOIN clients_site on agents_agent.site_id = clients_site.id\n  where \n    agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -238,7 +238,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\nCASE\r\n  WHEN (count(*) = 1) THEN 'Connected'\r\n  WHEN (count(*) = 0) THEN 'No Connected'\r\n  ELSE ''\r\n END AS modifiedpvc\r\n  \r\n from \r\n  agents_agent\r\n where \r\n   agents_agent.hostname = $Agents_HostName  and\r\n   last_seen > NOW()- interval '1 hours'\r\n ",
+          "rawSql": "select   \r\nCASE\r\n  WHEN (count(*) = 1) THEN 'Connected'\r\n  WHEN (count(*) = 0) THEN 'Not Connected'\r\n  ELSE ''\r\n END AS modifiedpvc\r\n  \r\n from \r\n  agents_agent\r\n where \r\n   agents_agent.hostname = '$Agent'  and\r\n   last_seen > NOW()- interval '1 hours'\r\n ",
           "refId": "A",
           "select": [
             [
@@ -310,7 +310,10 @@
           "fields": "/^concat$/",
           "values": false
         },
-        "text": {},
+        "text": {
+          "titleSize": 16,
+          "valueSize": 16
+        },
         "textMode": "auto"
       },
       "pluginVersion": "8.4.5",
@@ -324,7 +327,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes',\r\n          to_char(now() - to_timestamp(boot_time),'SS' ), ' Secondes'\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = $Agents_HostName",
+          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours ',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes '\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -348,7 +351,7 @@
           ]
         }
       ],
-      "title": "Online since",
+      "title": "Uptime",
       "type": "stat"
     },
     {
@@ -444,7 +447,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory\r\n  \r\n  WHERE x BETWEEN $__timeFrom() and $__timeTo() --'2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z'\r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='cpuload')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory\r\n  \r\n  WHERE x BETWEEN $__timeFrom() and $__timeTo() --'2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z'\r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='cpuload')\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -561,7 +564,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n  x BETWEEN $__timeFrom() AND $__timeTo() AND \r\n  check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='memory')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n  x BETWEEN $__timeFrom() AND $__timeTo() AND \r\n  check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='memory')\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -684,7 +687,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n   x BETWEEN $__timeFrom() AND $__timeTo() \r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = $Agents_HostName) AND check_type='diskspace')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n   x BETWEEN $__timeFrom() AND $__timeTo() \r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='diskspace')\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -722,7 +725,18 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "index": 0,
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -752,7 +766,9 @@
           "fields": "/^concat$/",
           "values": true
         },
-        "text": {},
+        "text": {
+          "valueSize": 14
+        },
         "textMode": "auto"
       },
       "pluginVersion": "8.4.5",
@@ -766,7 +782,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select  \r\n  concat(wmi_detail->'cpu'->0->0->>'Name',' \\ ',wmi_detail->'base_board'->0->0->>'Manufacturer')\r\nfrom \r\n  agents_agent\r\nwhere \r\n   agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select  \r\n  concat(wmi_detail->'cpu'->0->0->>'Name',' \\ ',wmi_detail->'base_board'->0->0->>'Manufacturer')\r\nfrom \r\n  agents_agent\r\nwhere \r\n   agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -790,7 +806,7 @@
           ]
         }
       ],
-      "title": "CPU Name",
+      "title": "CPU Model",
       "type": "stat"
     },
     {
@@ -850,7 +866,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bit') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = $Agents_HostName\r\n",
+          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bit') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = '$Agent'\r\n",
           "refId": "A",
           "select": [
             [
@@ -931,10 +947,12 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [],
-          "fields": "/.*/",
+          "fields": "/^status$/",
           "values": true
         },
-        "text": {},
+        "text": {
+          "valueSize": 14
+        },
         "textMode": "value"
       },
       "pluginVersion": "8.4.5",
@@ -948,7 +966,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  CASE\n   WHEN (has_patches_pending = true) THEN 'Windows not up to date'\n    WHEN (has_patches_pending = false) THEN 'Windows up to date'\n  ELSE 'nothing'\n END AS  Statut\nFROM \n  agents_agent\nwhere\n     agents_agent.hostname = $Agents_HostName",
+          "rawSql": "SELECT\n  CASE\n   WHEN (has_patches_pending = true) THEN 'Windows not up to date'\n    WHEN (has_patches_pending = false) THEN 'Windows up to date'\n  ELSE 'nothing'\n END AS  Status\nFROM \n  agents_agent\nwhere\n     agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -1029,10 +1047,12 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [],
-          "fields": "/^statut$/",
+          "fields": "/^status$/",
           "values": true
         },
-        "text": {},
+        "text": {
+          "valueSize": 14
+        },
         "textMode": "value"
       },
       "pluginVersion": "8.4.5",
@@ -1046,7 +1066,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Statut\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = $Agents_HostName\n",
+          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Status\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = '$Agent'\n",
           "refId": "A",
           "select": [
             [
@@ -1129,7 +1149,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -1212,7 +1232,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select \r\n  concat(items.device,'\\ ', items.free,' free on ',items.total)\r\nfrom \r\n  agents_agent,\r\n  jsonb_to_recordset(disks) as items(device text, free text, total text)\r\nWhere\r\n  agents_agent.hostname = $Agents_HostName",
+          "rawSql": "select \r\n  concat(items.device,'\\ ', items.free,' free on ',items.total)\r\nfrom \r\n  agents_agent,\r\n  jsonb_to_recordset(disks) as items(device text, free text, total text)\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -1301,7 +1321,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agents_HostName\r\n",
+          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'\r\n",
           "refId": "A",
           "select": [
             [
@@ -1345,7 +1365,7 @@
         "type": "postgres",
         "uid": "${Tactical}"
       },
-      "description": "Number of clients connected to TRMM",
+      "description": "Agents at selected clients/sites",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1383,7 +1403,9 @@
           "fields": "",
           "values": false
         },
-        "text": {},
+        "text": {
+          "valueSize": 48
+        },
         "textMode": "auto"
       },
       "pluginVersion": "8.4.5",
@@ -1421,7 +1443,7 @@
           ]
         }
       ],
-      "title": "Clients",
+      "title": "Agents",
       "type": "stat"
     },
     {
@@ -1441,6 +1463,10 @@
               {
                 "color": "dark-blue",
                 "value": null
+              },
+              {
+                "color": "transparent",
+                "value": 0
               }
             ]
           }
@@ -1466,7 +1492,9 @@
           "fields": "",
           "values": false
         },
-        "text": {},
+        "text": {
+          "valueSize": 48
+        },
         "textMode": "auto"
       },
       "pluginVersion": "8.4.5",
@@ -1522,11 +1550,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-blue",
+                "color": "yellow",
                 "value": null
               },
               {
-                "color": "#EAB839",
+                "color": "transparent",
                 "value": 0
               }
             ]
@@ -1553,7 +1581,9 @@
           "fields": "",
           "values": false
         },
-        "text": {},
+        "text": {
+          "valueSize": 48
+        },
         "textMode": "auto"
       },
       "pluginVersion": "8.4.5",
@@ -1610,11 +1640,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "red",
+                "color": "transparent",
                 "value": 0
               }
             ]
@@ -1786,6 +1816,24 @@
             "fixedColor": "semi-dark-green",
             "mode": "fixed"
           },
+          "custom": {
+            "axisGridShow": false,
+            "axisLabel": "",
+            "axisPlacement": "right",
+            "axisSoftMin": 0,
+            "axisWidth": 1,
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1807,17 +1855,27 @@
       },
       "id": 26,
       "options": {
-        "displayMode": "basic",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/.*/",
-          "values": true
+        "barRadius": 0,
+        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
         },
-        "showUnfilled": true,
-        "text": {}
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "text": {
+          "valueSize": 24
+        },
+        "tooltip": {
+          "mode": "none",
+          "sort": "none"
+        },
+        "xTickLabelMaxLength": 16,
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "8.4.5",
       "targets": [
@@ -1830,7 +1888,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  SUBSTRING(agents_agent.operating_system,'(.*)bit') AS \"Operating System\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Operating System\"\r\nOrder by \"count\" desc\r\n  ",
+          "rawSql": "SELECT \r\n  count(*) as \"count\",\r\n  SUBSTRING(agents_agent.operating_system,'(.*)v') AS \"Operating System\"\r\nFROM agents_agent\r\n  INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\r\n  INNER JOIN clients_client ON clients_site.client_id = clients_client.id\r\nWHERE\r\n  clients_client.name IN ($Client)\r\n  AND clients_site.name IN ($Sites)\r\nGroup by \"Operating System\"\r\nOrder by \"count\" desc\r\n  ",
           "refId": "A",
           "select": [
             [
@@ -1856,19 +1914,37 @@
       ],
       "title": "OS Type",
       "transformations": [],
-      "type": "bargauge"
+      "type": "barchart"
     },
     {
       "datasource": {
         "type": "postgres",
         "uid": "${Tactical}"
       },
-      "description": "List all installed processors",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "fixedColor": "semi-dark-green",
             "mode": "fixed"
+          },
+          "custom": {
+            "axisGridShow": false,
+            "axisLabel": "",
+            "axisPlacement": "right",
+            "axisSoftMin": 0,
+            "axisWidth": 1,
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -1891,17 +1967,27 @@
       },
       "id": 54,
       "options": {
-        "displayMode": "basic",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/.*/",
-          "values": true
+        "barRadius": 0,
+        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
         },
-        "showUnfilled": true,
-        "text": {}
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "text": {
+          "valueSize": 24
+        },
+        "tooltip": {
+          "mode": "none",
+          "sort": "none"
+        },
+        "xTickLabelMaxLength": 22,
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "8.4.5",
       "targets": [
@@ -1914,7 +2000,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  wmi_detail->'cpu'->0->0->>'Name' as \"CPU Name\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"CPU Name\"\r\nOrder by \"count\" desc\r\n  ",
+          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  SUBSTRING(wmi_detail->'cpu'->0->0->>'Name',' (.*)(?:with|Processor|@)') as \"CPU Name\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"CPU Name\"\r\nOrder by \"count\" desc",
           "refId": "A",
           "select": [
             [
@@ -1938,8 +2024,8 @@
           ]
         }
       ],
-      "title": "Processor type",
-      "type": "bargauge"
+      "title": "Type of CPUs",
+      "type": "barchart"
     },
     {
       "datasource": {
@@ -1952,6 +2038,24 @@
           "color": {
             "fixedColor": "semi-dark-green",
             "mode": "fixed"
+          },
+          "custom": {
+            "axisGridShow": false,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "axisWidth": 1,
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -1974,17 +2078,27 @@
       },
       "id": 55,
       "options": {
-        "displayMode": "basic",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/.*/",
-          "values": true
+        "barRadius": 0,
+        "barWidth": 0.8,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
         },
-        "showUnfilled": true,
-        "text": {}
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "text": {
+          "valueSize": 24
+        },
+        "tooltip": {
+          "mode": "none",
+          "sort": "none"
+        },
+        "xTickLabelMaxLength": 35,
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "8.4.5",
       "targets": [
@@ -1997,7 +2111,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  concat((total_ram),' GB') as \"Size Memory\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\n\r\nWHERE\r\n site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Size Memory\"\r\nOrder by \"Size Memory\" desc\r\n  ",
+          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  concat((total_ram),' GB') as \"Size Memory\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Size Memory\"\r\nOrder by \"count\" desc\r\n  ",
           "refId": "A",
           "select": [
             [
@@ -2022,14 +2136,14 @@
         }
       ],
       "title": "Installed System RAM",
-      "type": "bargauge"
+      "type": "barchart"
     },
     {
       "datasource": {
         "type": "postgres",
         "uid": "${Tactical}"
       },
-      "description": "Number of clients connected to TRMM",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2078,7 +2192,7 @@
       },
       "gridPos": {
         "h": 13,
-        "w": 9,
+        "w": 11,
         "x": 0,
         "y": 34
       },
@@ -2092,12 +2206,7 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "Last Reboot"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "8.4.5",
       "targets": [
@@ -2134,7 +2243,7 @@
           ]
         }
       ],
-      "title": "Client last reboot",
+      "title": "Agent Status",
       "type": "table"
     },
     {
@@ -2202,13 +2311,25 @@
                 "value": 190
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Date"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 161
+              }
+            ]
           }
         ]
       },
       "gridPos": {
         "h": 13,
-        "w": 15,
-        "x": 9,
+        "w": 13,
+        "x": 11,
         "y": 34
       },
       "id": 33,
@@ -2234,7 +2355,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  alert_time as \"Date Message\",\r\n  alerts_alert.severity as \"Severity\",\r\n  message as \"Messages\"\r\n  FROM alerts_alert\r\nWHERE \r\n alerts_alert.severity = '$Message_Severity'\r\n AND alerts_alert.resolved = false",
+          "rawSql": "SELECT \r\n    alerts_alert.alert_time as \"Date\",\r\n    alerts_alert.message as \"Message\"\r\nFROM alerts_alert\r\n    LEFT JOIN checks_check on alerts_alert.assigned_check_id = checks_check.id\r\n    LEFT JOIN autotasks_automatedtask on alerts_alert.assigned_task_id = autotasks_automatedtask.id\r\n    INNER JOIN agents_agent ON alerts_alert.agent_id = agents_agent.id\r\n                            OR autotasks_automatedtask.agent_id = agents_agent.id\r\n                            OR checks_check.agent_id = agents_agent.id\r\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\r\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\r\nWHERE\r\n  clients_client.name IN ($Client)\r\n  AND clients_site.name IN ($Sites)\r\n  AND alerts_alert.severity = 'error' \r\n  AND alerts_alert.resolved = false",
           "refId": "A",
           "select": [
             [
@@ -2272,7 +2393,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -2280,17 +2401,18 @@
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT name FROM clients_client order by name",
+        "definition": "SELECT name FROM clients_client",
         "hide": 0,
         "includeAll": true,
+        "label": "Client",
         "multi": false,
         "name": "Client",
         "options": [],
-        "query": "SELECT name FROM clients_client order by name",
+        "query": "SELECT name FROM clients_client",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
@@ -2306,17 +2428,18 @@
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT name FROM clients_site",
+        "definition": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "hide": 0,
         "includeAll": true,
+        "label": "Site",
         "multi": false,
         "name": "Sites",
         "options": [],
-        "query": "SELECT name FROM clients_site",
+        "query": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "type": "query"
       },
       {
@@ -2329,37 +2452,14 @@
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT \nhostname\nFROM \nagents_agent\n\n",
-        "hide": 0,
-        "includeAll": true,
-        "multi": false,
-        "name": "Agents_HostName",
-        "options": [],
-        "query": "SELECT \nhostname\nFROM \nagents_agent\n\n",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": {
-          "type": "postgres",
-          "uid": "${Tactical}"
-        },
-        "definition": "SELECT \nalerts_alert.severity\n  FROM alerts_alert",
+        "definition": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
         "hide": 0,
         "includeAll": false,
+        "label": "Agent",
         "multi": false,
-        "name": "Message_Severity",
+        "name": "Agent",
         "options": [],
-        "query": "SELECT \nalerts_alert.severity\n  FROM alerts_alert",
+        "query": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2395,6 +2495,6 @@
   "timezone": "",
   "title": "TacticalRMM Agent Dashboard",
   "uid": "pLkA1-inz",
-  "version": 6,
+  "version": 21,
   "weekStart": ""
 }
