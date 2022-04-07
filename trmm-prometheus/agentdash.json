@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 10,
-  "iteration": 1649187219030,
+  "iteration": 1649291792411,
   "links": [
     {
       "asDropdown": false,
@@ -142,7 +142,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select \n  concat('Site: ',clients_site.name,' / HostName: ', agents_agent.hostname,' ',agents_agent.DESCRIPTION)\nfrom \n  agents_agent\n  LEFT OUTER JOIN clients_site on agents_agent.site_id = clients_site.id\n  where \n    agents_agent.hostname = $Agent",
+          "rawSql": "select \n  concat('Site: ',clients_site.name,' / HostName: ', agents_agent.hostname,' ',agents_agent.DESCRIPTION)\nfrom \n  agents_agent\n  LEFT OUTER JOIN clients_site on agents_agent.site_id = clients_site.id\n  where \n    agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -239,7 +239,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours ',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes '\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = $Agent",
+          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours ',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes '\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -283,7 +283,7 @@
                   "color": "semi-dark-green",
                   "index": 1
                 },
-                "No Connected": {
+                "Not Connected": {
                   "color": "dark-red",
                   "index": 0
                 }
@@ -350,7 +350,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\nCASE\r\n  WHEN (count(*) = 1) THEN 'Connected'\r\n  WHEN (count(*) = 0) THEN 'No Connected'\r\n  ELSE ''\r\n END AS modifiedpvc\r\n  \r\n from \r\n  agents_agent\r\n where \r\n   agents_agent.hostname = $Agent  and\r\n   last_seen > NOW()- interval '1 hours'\r\n ",
+          "rawSql": "select   \r\nCASE\r\n  WHEN (count(*) = 1) THEN 'Connected'\r\n  WHEN (count(*) = 0) THEN 'Not Connected'\r\n  ELSE ''\r\n END AS modifiedpvc\r\n  \r\n from \r\n  agents_agent\r\n where \r\n   agents_agent.hostname = '$Agent'  and\r\n   last_seen > NOW()- interval '1 hours'\r\n ",
           "refId": "A",
           "select": [
             [
@@ -460,7 +460,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  CASE\n   WHEN (has_patches_pending = true) THEN 'System not up to date'\n    WHEN (has_patches_pending = false) THEN 'System up to date'\n  ELSE 'nothing'\n END AS  Status\nFROM \n  agents_agent\nwhere\n     agents_agent.hostname = $Agent",
+          "rawSql": "SELECT\n  CASE\n   WHEN (has_patches_pending = true) THEN 'System not up to date'\n    WHEN (has_patches_pending = false) THEN 'System up to date'\n  ELSE 'nothing'\n END AS  Status\nFROM \n  agents_agent\nwhere\n     agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -570,7 +570,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Status\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = $Agent\n",
+          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Status\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = '$Agent'\n",
           "refId": "A",
           "select": [
             [
@@ -664,7 +664,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select  \r\n  concat(wmi_detail->'cpu'->0->0->>'Name',' \\ ',wmi_detail->'base_board'->0->0->>'Manufacturer')\r\nfrom \r\n  agents_agent\r\nwhere \r\n   agents_agent.hostname = $Agent",
+          "rawSql": "select  \r\n  concat(wmi_detail->'cpu'->0->0->>'Name',' \\ ',wmi_detail->'base_board'->0->0->>'Manufacturer')\r\nfrom \r\n  agents_agent\r\nwhere \r\n   agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -761,7 +761,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agent",
+          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -858,7 +858,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bit') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = $Agent\r\n",
+          "rawSql": "select   \r\n  concat(SUBSTRING(agents_agent.operating_system,'(.*),'),' ', wmi_detail->'cpu'->0->0->>'DataWidth',' Bit') \r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = '$Agent'\r\n",
           "refId": "A",
           "select": [
             [
@@ -941,7 +941,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select \r\n  concat(items.device,'\\ ', items.free,' free on ',items.total)\r\nfrom \r\n  agents_agent,\r\n  jsonb_to_recordset(disks) as items(device text, free text, total text)\r\nWhere\r\n  agents_agent.hostname = $Agent",
+          "rawSql": "select \r\n  concat(items.device,'\\ ', items.free,' free on ',items.total)\r\nfrom \r\n  agents_agent,\r\n  jsonb_to_recordset(disks) as items(device text, free text, total text)\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -1041,7 +1041,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = $Agent\r\n",
+          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'\r\n",
           "refId": "A",
           "select": [
             [
@@ -1138,10 +1138,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${WindowsExp}"
           },
           "exemplar": false,
-          "expr": "(windows_os_virtual_memory_bytes{instance=~\"$server.*\"} - windows_os_virtual_memory_free_bytes{instance=~\"$server.*\"}) / windows_os_virtual_memory_bytes{instance=~\"$server.*\"} * 100",
+          "expr": "(windows_os_virtual_memory_bytes{instance=\"$server:9182\"} - windows_os_virtual_memory_free_bytes{instance=\"$server:9182\"}) / windows_os_virtual_memory_bytes{instance=\"$server:9182\"} * 100",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1221,10 +1221,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${WindowsExp}"
           },
           "exemplar": false,
-          "expr": "100 - (avg by (instance) (irate(windows_cpu_time_total{mode=\"idle\", instance=~\"$server.*\"}[$__interval])) * 100)",
+          "expr": "100 - (avg by (instance) (irate(windows_cpu_time_total{mode=\"idle\", instance=\"$server:9182\"}[$__interval])) * 100)",
           "instant": true,
           "interval": "1m",
           "legendFormat": "",
@@ -1304,10 +1304,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${WindowsExp}"
           },
           "exemplar": false,
-          "expr": "(windows_cs_physical_memory_bytes{instance=~\"$server.*\"} - windows_os_physical_memory_free_bytes{instance=~\"$server.*\"}) / windows_cs_physical_memory_bytes{instance=~\"$server.*\"} * 100",
+          "expr": "(windows_cs_physical_memory_bytes{instance=\"$server:9182\"} - windows_os_physical_memory_free_bytes{instance=\"$server:9182\"}) / windows_cs_physical_memory_bytes{instance=\"$server:9182\"} * 100",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1372,7 +1372,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": false,
-          "expr": "windows_os_info{instance=~\"$server.*\"}",
+          "expr": "windows_os_info{instance=\"$server:9182\"}",
           "instant": true,
           "interval": "",
           "legendFormat": "{{ version }}",
@@ -1512,7 +1512,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "100 / sum(rate(windows_cpu_time_total{instance=~\"$server.*\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=~\"$server.*\", mode=\"dpc\"}[$__rate_interval]))",
+          "expr": "100 / sum(rate(windows_cpu_time_total{instance=\"$server:9182\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=\"$server:9182\", mode=\"dpc\"}[$__rate_interval]))",
           "interval": "",
           "legendFormat": "dpc",
           "refId": "A"
@@ -1523,7 +1523,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "100 / sum(rate(windows_cpu_time_total{instance=~\"$server.*\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=~\"$server.*\", mode=\"interrupt\"}[$__rate_interval]))",
+          "expr": "100 / sum(rate(windows_cpu_time_total{instance=\"$server:9182\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=\"$server:9182\", mode=\"interrupt\"}[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "interrupt",
@@ -1535,7 +1535,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "100 / sum(rate(windows_cpu_time_total{instance=~\"$server.*\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=~\"$server:9182.*\", mode=\"privileged\"}[$__rate_interval]))",
+          "expr": "100 / sum(rate(windows_cpu_time_total{instance=\"$server:9182\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=\"$server:9182\", mode=\"privileged\"}[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "privileged",
@@ -1547,7 +1547,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "100 / sum(rate(windows_cpu_time_total{instance=~\"$server.*\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=~\"$server.*\", mode=\"user\"}[$__rate_interval]))",
+          "expr": "100 / sum(rate(windows_cpu_time_total{instance=\"$server:9182\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=\"$server:9182\", mode=\"user\"}[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "user",
@@ -1559,7 +1559,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "100 / sum(rate(windows_cpu_time_total{instance=~\"$server.*\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=~\"$server.*\", mode=\"idle\"}[$__rate_interval]))",
+          "expr": "100 / sum(rate(windows_cpu_time_total{instance=\"$server:9182\"}[$__rate_interval])) * sum(rate(windows_cpu_time_total{instance=\"$server:9182\", mode=\"idle\"}[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "idle",
@@ -1654,7 +1654,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "sum by (process) (rate(windows_process_cpu_time_total{instance=~\"$server.*\", process !~\"Idle\"}[$__rate_interval]))",
+          "expr": "sum by (process) (rate(windows_process_cpu_time_total{instance=\"$server:9182\", process !~\"Idle\"}[$__rate_interval]))",
           "interval": "",
           "legendFormat": "{{ process }}",
           "refId": "A"
@@ -1842,7 +1842,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "windows_cs_physical_memory_bytes{instance=~\"$server.*\"} - windows_os_physical_memory_free_bytes{instance=~\"$server.*\"}",
+          "expr": "windows_cs_physical_memory_bytes{instance=\"$server:9182\"} - windows_os_physical_memory_free_bytes{instance=\"$server:9182\"}",
           "interval": "",
           "legendFormat": "Used",
           "refId": "A"
@@ -1853,7 +1853,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "windows_os_physical_memory_free_bytes{instance=~\"$server.*\"}",
+          "expr": "windows_os_physical_memory_free_bytes{instance=\"$server:9182\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Free",
@@ -1865,7 +1865,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "100 - (windows_os_physical_memory_free_bytes{instance=~\"$server.*\"} / windows_cs_physical_memory_bytes{instance=~\"$server.*\"}) * 100",
+          "expr": "100 - (windows_os_physical_memory_free_bytes{instance=\"$server:9182\"} / windows_cs_physical_memory_bytes{instance=\"$server:9182\"}) * 100",
           "hide": false,
           "interval": "",
           "legendFormat": "Used %",
@@ -1960,7 +1960,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "avg by (process) (windows_process_private_bytes{instance=~\"$server.*\", process=~\".*\"})",
+          "expr": "avg by (process) (windows_process_private_bytes{instance=\"$server:9182\", process=~\".*\"})",
           "interval": "",
           "legendFormat": "{{ process }}",
           "refId": "A"
@@ -2076,7 +2076,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "irate(windows_logical_disk_write_bytes_total{instance=~\"$server.*\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
+          "expr": "irate(windows_logical_disk_write_bytes_total{instance=\"$server:9182\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "Write {{volume}}",
           "refId": "A"
@@ -2087,7 +2087,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "irate(windows_logical_disk_read_bytes_total{instance=~\"$server.*\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
+          "expr": "irate(windows_logical_disk_read_bytes_total{instance=\"$server:9182\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "Read {{volume}}",
@@ -2195,7 +2195,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "avg by (process) (rate(windows_process_io_bytes_total{instance=~\"$server.*\", mode=\"read\"}[$__rate_interval])) > 0",
+          "expr": "avg by (process) (rate(windows_process_io_bytes_total{instance=\"$server:9182\", mode=\"read\"}[$__rate_interval])) > 0",
           "interval": "",
           "legendFormat": "{{ process }} read",
           "refId": "A"
@@ -2206,7 +2206,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "avg by (process) (rate(windows_process_io_bytes_total{instance=~\"$server.*\", mode=\"write\"}[$__rate_interval])) > 0",
+          "expr": "avg by (process) (rate(windows_process_io_bytes_total{instance=\"$server:9182\", mode=\"write\"}[$__rate_interval])) > 0",
           "hide": false,
           "interval": "",
           "legendFormat": "{{ process }} write",
@@ -2301,7 +2301,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "rate(windows_logical_disk_split_ios_total{instance=~\"$server.*\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
+          "expr": "rate(windows_logical_disk_split_ios_total{instance=\"$server:9182\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "i/o {{volume}}",
           "refId": "A"
@@ -2395,7 +2395,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "rate(windows_logical_disk_write_latency_seconds_total{instance=~\"$server.*\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
+          "expr": "rate(windows_logical_disk_write_latency_seconds_total{instance=\"$server:9182\", volume !~\"HarddiskVolume.+\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "Latency {{volume}}",
           "refId": "A"
@@ -2514,7 +2514,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "rate(windows_net_bytes_sent_total{instance=~\"$server.*\"}[$__rate_interval])",
+          "expr": "rate(windows_net_bytes_sent_total{instance=\"$server:9182\"}[$__rate_interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "Sent {{nic}}",
@@ -2523,10 +2523,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "rate(windows_net_bytes_received_total{instance=~\"$server.*\"}[$__rate_interval])",
+          "expr": "rate(windows_net_bytes_received_total{instance=\"$server:9182\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "Received {{nic}}",
           "refId": "A"
@@ -2632,7 +2632,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "irate(windows_net_packets_outbound_discarded_total{instance=~\"$server.*\", nic!~\"isatap.+\"}[$__rate_interval]) + irate(windows_net_packets_outbound_errors_total{instance=~\"$server.*\"}[$__rate_interval])",
+          "expr": "irate(windows_net_packets_outbound_discarded_total{instance=\"$server:9182\", nic!~\"isatap.+\"}[$__rate_interval]) + irate(windows_net_packets_outbound_errors_total{instance=\"$server:9182\"}[$__rate_interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "Sent {{nic}}",
@@ -2644,7 +2644,7 @@
             "uid": "${WindowsExp}"
           },
           "exemplar": true,
-          "expr": "irate(windows_net_packets_received_discarded_total{instance=~\"$server.*\", nic!~\"isatap.+\"}[$__rate_interval]) + irate(windows_net_packets_received_errors_total{instance=~\"$server.*\"}[$__rate_interval])",
+          "expr": "irate(windows_net_packets_received_discarded_total{instance=\"$server:9182\", nic!~\"isatap.+\"}[$__rate_interval]) + irate(windows_net_packets_received_errors_total{instance=\"$server:9182\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "Received {{nic}}",
           "refId": "A"
@@ -2654,7 +2654,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "10s",
+  "refresh": false,
   "schemaVersion": 35,
   "style": "dark",
   "tags": [
@@ -2672,17 +2672,18 @@
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT name FROM clients_client order by name",
+        "definition": "SELECT\n    name\nFROM\n    clients_client",
         "hide": 0,
         "includeAll": true,
+        "label": "Client",
         "multi": false,
         "name": "Client",
         "options": [],
-        "query": "SELECT name FROM clients_client order by name",
+        "query": "SELECT\n    name\nFROM\n    clients_client",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
@@ -2690,7 +2691,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2698,37 +2699,40 @@
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT name FROM clients_site",
+        "definition": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "hide": 0,
         "includeAll": true,
+        "label": "Site",
         "multi": false,
         "name": "Sites",
         "options": [],
-        "query": "SELECT name FROM clients_site",
+        "query": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "type": "query"
       },
       {
+        "allValue": "null",
         "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
+          "selected": false,
+          "text": "",
+          "value": ""
         },
         "datasource": {
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT \nhostname\nFROM \nagents_agent\n\n",
+        "definition": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
+        "label": "Agent",
         "multi": false,
         "name": "Agent",
         "options": [],
-        "query": "SELECT \nhostname\nFROM \nagents_agent\n\n",
-        "refresh": 1,
+        "query": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -2769,35 +2773,34 @@
         "type": "datasource"
       },
       {
-        "allValue": "null",
+        "allValue": "0.0.0.0",
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
+          "text": "",
           "value": ""
         },
         "datasource": {
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT\nnetwork_config->0->>'IPAddress' as \"IP Address\"\nFROM agents_agent\ncross join lateral jsonb_array_elements(wmi_Detail->'network_config') as network_config\nWHERE (hostname in($Agent)) and (network_config->0->>'DefaultIPGateway' is not null) and (($Agent) <> 'All')",
+        "definition": "SELECT\n    SUBSTRING(network_config->0->>'IPAddress','([\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3})')\nFROM \n    agents_agent\nCROSS JOIN LATERAL \n    jsonb_array_elements(wmi_Detail->'network_config') as network_config\nWHERE \n    hostname = '$Agent'\nAND\n    network_config->0->>'DefaultIPGateway' is not null\nAND\n    network_config->0->>'IPAddress' is not null\nORDER BY\n    network_config->0->>'IPConnectionMetric' ASC\nLIMIT 1",
         "hide": 0,
         "includeAll": false,
         "label": "Agent_IP",
         "multi": false,
         "name": "server",
         "options": [],
-        "query": "SELECT\nnetwork_config->0->>'IPAddress' as \"IP Address\"\nFROM agents_agent\ncross join lateral jsonb_array_elements(wmi_Detail->'network_config') as network_config\nWHERE (hostname in($Agent)) and (network_config->0->>'DefaultIPGateway' is not null) and (($Agent) <> 'All')",
+        "query": "SELECT\n    SUBSTRING(network_config->0->>'IPAddress','([\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3})')\nFROM \n    agents_agent\nCROSS JOIN LATERAL \n    jsonb_array_elements(wmi_Detail->'network_config') as network_config\nWHERE \n    hostname = '$Agent'\nAND\n    network_config->0->>'DefaultIPGateway' is not null\nAND\n    network_config->0->>'IPAddress' is not null\nORDER BY\n    network_config->0->>'IPConnectionMetric' ASC\nLIMIT 1",
         "refresh": 2,
-        "regex": "/((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?\\.){3}(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))/",
+        "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 2,
         "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -2806,6 +2809,6 @@
   "timezone": "",
   "title": "T-RMM Agent Dashboard",
   "uid": "pLkA1-inz",
-  "version": 134,
+  "version": 193,
   "weekStart": ""
 }
