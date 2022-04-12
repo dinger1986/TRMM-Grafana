@@ -11,7 +11,9 @@
 7. Enter the domain for the frontend e.g. rmm.mydomain.com
 8. Enter your full domain e.g. mydomain.com
 9. Go to https://rmm.mydomain.com:3000
-10. Go to dashboards and copy the dashboard to reconfigure how you want it or keep it as default
+10. Go to dashboards and copy the dashboard to reconfigure how you want it or keep it as default.
+11. Edit T-RMM PostgreSQL datasource to have the name TacticalRMM, case sensitive. No longer required to be the default datasource. See image below.
+![Screenshot 2022-04-06 114312-1](https://user-images.githubusercontent.com/24654529/162878388-38c42632-f4b8-487c-b8c8-2e79ffe7f984.png)
 ##
 Add URL action to Tactical (correct URL will be shown at the end of the script):
 https://rmm.mydomain.com:3000/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
@@ -28,7 +30,7 @@ to the same as is in /etc/grafana/provisioning/datasources/default.yaml
 secureJsonData:
   password: ""
 3. Replace the password for dbreader for postgres with the following command
-4. sudo -u postgres psql tacticalrmm -c "ALTER USER dbreader WITH PASSWORD 'new_password'"
+4. sudo -u postgres psql tacticalrmm -c "ALTER USER dbreader WITH PASSWORD 'new_password';"
 
 If you have errors on some parts of the Dash but the agent count is working you must select an Agent from the top dropdown. This is by design!
 
