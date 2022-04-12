@@ -1,11 +1,22 @@
 # TRMM-Grafana Setup methods:
+###
 
-## [Baremetal](#trmm-grafana-basic-baremetal-setup-is)
+## [Baremetal](#trmm-grafana-basic-baremetal-setup)
 
 ## [Docker](#docker-setup)
 
-# TRMM-Grafana Basic baremetal setup is:
+###
+# Dashboard Info:
+###
 
+## [Current Dashboards](#current-dashboards)
+
+## [Updating Dashboards](#updating-dashboards)
+
+## [Dashboard Images and Links](#dashboard-images-and-links)
+
+###
+# TRMM-Grafana Basic baremetal setup:
 ###
 
 1. Swap to user setup for tactical rmm - e.g. su tactical
@@ -52,42 +63,10 @@ Reset Passwords:
 From command line do: `grafana-cli admin reset-admin-password admin`
 
 ##
-### 
-### Updating Dashboards (incase theres new ones)
-### Current Dashboards are one for URL actions and one for TV display
 
-1. Swap to user setup for tactical rmm - e.g. su tactical
-2. Go to home - cd ~/
-3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/updateg.sh
-4. chmod +x updateg.sh
-5. ./updateg.sh
-6. Enter your username
-##
-
-### 
-### Current Dashboards
-
-**All dashboards have been updated with links to easily switch between them after initial connection to the Agent dashboard.**
-
-**T-RMM Agent Dashboard** - Used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
-
-**T-RMM Client Overview Dashboard** - Showing Agent count, Information, Errors, and Warnings, including messages.
-
-**T-RMM Client Map Dashboard:** 
-  * Allows you to display a world map with the position of T-RMM agents.
-  
-  *For use map in Grafana:*  
-  In TRMM
-  1. Add customField: Name = "adressPostal" / type Text
-  2. Add customField: Name = "geohas" / type Text / Hide Dashboard
-  3. Create account for api https://positionstack.com/product
-  4. add script python (and add you keyAPI at the line 14) [Download Script](https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/a8e19f8a286cda043d8b06cac9592ee197c2dea2/Scripts/Map_getCoordinates.py)	
-  5. add arguments {{agent.adressPostal}} and {{agent.geohas}} **Warning** The order of the arguments is important!
-
-In Grafana
-  1. add news json in grafana
-##
+###
 # Docker setup:
+###
 
 **Assumes existing and in use Tactical and Prometheus/Grafana stacks via docker-compose/Portainer.**
 
@@ -194,3 +173,77 @@ Now you should be able to select a client and run the URL action to open the Gra
 
 ## Important
 When updating T-RMM Docker images, you'll need to stop the Grafana stack first, as it's tied into the T-RMM network, or the T-RMM stack will not properly stop. After updating, bring up T-RMM first, then Grafana.
+
+##
+###
+# Current Dashboards
+###
+
+**All dashboards have been updated with links to easily switch between them after initial connection to the Agent dashboard, as well as basic Linux agent functionality. Linux info is limited by what data T-RMM currently collects.**
+
+**T-RMM Agent Dashboard** - Used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents. Also includes most of the functions of the Client Overview dashboard.
+
+**Alternate T-RMM Agent Dashboard** Same as the original, but removes the panels already present in the Client Overview dashboard and adds a small panel that displays the version of the agents installed operating system.
+
+**T-RMM Client Overview Dashboard** - Shows Client, Site, and Agent counts, Information, Warning, and Error counts, as well as messages for them. Links are included for direct access to the associated Grafana Agent Dashboard with agent preselected, as well as to the agents T-RMM page. 
+
+**T-RMM Client Map Dashboard:** 
+  * Allows you to display a world map with the position of T-RMM agents.
+  
+  *To use the client map in Grafana:*
+  In T-RMM:
+  1. Add customField: Name = "adressPostal" / type Text
+  2. Add customField: Name = "geohas" / type Text / Hide Dashboard
+  3. Create account for api https://positionstack.com/product
+  4. Add python script (and add your api key at line 14) [Download Script](https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/a8e19f8a286cda043d8b06cac9592ee197c2dea2/Scripts/Map_getCoordinates.py)	
+  5. Add arguments {{agent.adressPostal}} and {{agent.geohas}} **Warning** The order of the arguments is important!
+
+In Grafana:
+  1. Import clientmap.json dash if it's not already in place. Make sure the datasource variable is properly configured, with the same settings as the other two dashboards.
+
+##
+
+# Updating Dashboards
+
+### Baremetal:
+
+1. Swap to user setup for tactical rmm - e.g. su tactical
+2. Go to home - cd ~/
+3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/updateg.sh
+4. chmod +x updateg.sh
+5. ./updateg.sh
+6. Enter your username
+7. Verify T-RMM PostgreSQL datasource has the name TacticalRMM, case sensitive. If not, change it to TacticalRMM or you will get datasource errors.
+8. Edit the TacticalURL and GrafanaURL variables (if present) in the Agent and Client Dashboards to match your T-RMM and Grafana URLs, then reload the dashboards.
+
+### Docker:
+
+1. Download the new files from the links in the Docker installation instructions.
+2. Import the new dashboards as you did during installation, or import them as new dashboards, changing the UIDs and Names during import. The links between dashboards work via tags, not dashboard name, so you'll be able to use both the original and new dashboards at the same time, to see which you prefer or to transfer panels you added to the previous set to the new ones.
+3. Verify T-RMM PostgreSQL datasource has the name TacticalRMM, case sensitive. If not, change it to TacticalRMM or you will get datasource errors.
+4. Edit the TacticalURL and GrafanaURL variables (if present) in the Agent and Client Dashboards to match your T-RMM and Grafana URLs, then reload the dashboards.
+
+##
+
+# Dashboard Images and Links
+
+### Agent Dashboard
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/agentdash.json
+
+![Screenshot 2022-04-12 173001](https://user-images.githubusercontent.com/24654529/163067761-4c59b0ca-a74d-4327-934a-536bb945cba8.png)
+![Screenshot 2022-04-12 173045](https://user-images.githubusercontent.com/24654529/163066204-ad5379b1-9ced-4c56-ab4e-a69453aa035e.png)
+
+### Alternate Agent Dashboard
+https://github.com/dinger1986/TRMM-Grafana/blob/main/alt-trmm-dashboards/agentdash.json
+
+![Screenshot 2022-04-12 175307](https://user-images.githubusercontent.com/24654529/163067694-3e2c2ae4-dbd8-4ee6-a124-da1d736e8a26.png)
+
+### Client Overview Dashboard
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/clientdash.json
+
+![Screenshot 2022-04-12 174723](https://user-images.githubusercontent.com/24654529/163067334-bb8b44be-44c3-4ff0-93cb-1e918b27b7a7.png)
+
+### Client Map Dashboard
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/clientmap.json
+
+![Screenshot 2022-04-12 175718](https://user-images.githubusercontent.com/24654529/163067848-063280b5-6921-4550-bd3c-001175b87cfa.png)
