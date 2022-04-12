@@ -17,7 +17,9 @@
 7. Enter the domain for the frontend e.g. rmm.mydomain.com
 8. Enter your full domain e.g. mydomain.com
 9. Go to https://rmm.mydomain.com:3000
-10. Go to dashboards and copy the dashboard to reconfigure how you want it or keep it as default
+10. Go to dashboards and copy the dashboard to reconfigure how you want it or keep it as default.
+11. Verify T-RMM PostgreSQL datasource has the name TacticalRMM, case sensitive. If not, change it to TacticalRMM if you get datasource errors. Updated dashboards no longer require it to be the default datasource. See image below.
+![Screenshot 2022-04-06 114312-1](https://user-images.githubusercontent.com/24654529/162878388-38c42632-f4b8-487c-b8c8-2e79ffe7f984.png)
 ##
 Add URL action to Tactical (correct URL will be shown at the end of the script):
 https://rmm.mydomain.com:3000/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
