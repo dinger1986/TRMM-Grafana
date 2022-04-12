@@ -57,11 +57,11 @@ admintoken=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 70 | head -n 1)
 cd ~/
 
 # Create a read-only PostgreSQL user for the tacticalrmm database
-sudo -u postgres psql tacticalrmm -c "CREATE ROLE dbreader WITH LOGIN PASSWORD '${admintoken}'"
-sudo -u postgres psql tacticalrmm -c "GRANT CONNECT ON DATABASE tacticalrmm TO dbreader"
-sudo -u postgres psql tacticalrmm -c "GRANT USAGE ON SCHEMA public to dbreader"
-sudo -u postgres psql tacticalrmm -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO dbreader"
-sudo -u postgres psql tacticalrmm -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO dbreader"
+sudo -u postgres psql tacticalrmm -c "CREATE ROLE dbreader WITH LOGIN PASSWORD '${admintoken}';"
+sudo -u postgres psql tacticalrmm -c "GRANT CONNECT ON DATABASE tacticalrmm TO dbreader;"
+sudo -u postgres psql tacticalrmm -c "GRANT USAGE ON SCHEMA public to dbreader;"
+sudo -u postgres psql tacticalrmm -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO dbreader;"
+sudo -u postgres psql tacticalrmm -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO dbreader;"
 
 # create a firewall rule for the Grafana website (default port is 3000)
 sudo ufw allow 3000/tcp
@@ -93,7 +93,7 @@ deleteDatasources:
 
 ## list of datasources to insert/update depending
 datasources:
-- name: PostgreSQL
+- name: TacticalRMM
   type: postgres
   access: proxy
   url: localhost:5432
@@ -1088,7 +1088,7 @@ printf >&2 "1. Sign into Grafana (admin / admin) and change the admin password.\
 printf >&2 "2. You can customise the default dashboard by saving a copy.\n\n"
 printf >&2 "\n\n"
 printf >&2 "URL Action Address is:\n\n"
-printf >&2 "https://${domain}:3000/d/pLkA1-inz/tacticalrmm-dashboard-trmm?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}\n\n"
+printf >&2 "https://${domain}:3000/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}\n\n"
 
 
 
