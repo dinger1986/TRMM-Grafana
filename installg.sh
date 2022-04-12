@@ -139,13 +139,13 @@ echo "${dashconf}" > /etc/grafana/provisioning/dashboards/default.yaml
 
 #Get Dashboards
 sudo mkdir /var/lib/grafana/dashboards
-sudo rm /var/lib/grafana/dashboards/sebdash.json
-sudo rm /var/lib/grafana/dashboards/default.json
+sudo mv /var/lib/grafana/dashboards/sebdash.json /var/lib/grafana/dashboards/sebdash.json.back
+sudo mv /var/lib/grafana/dashboards/default.json /var/lib/grafana/dashboards/default.json.back
 sudo chown -R ${username}:${username} /var/lib/grafana/dashboards
 cd /var/lib/grafana/dashboards
-wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/sebdash.json
-wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/tvdash.json
-wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/mapdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/agentdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/clientdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/clientmap.json
 
 cd ~/
 
@@ -1088,7 +1088,7 @@ printf >&2 "1. Sign into Grafana (admin / admin) and change the admin password.\
 printf >&2 "2. You can customise the default dashboard by saving a copy.\n\n"
 printf >&2 "\n\n"
 printf >&2 "URL Action Address is:\n\n"
-printf >&2 "https://${domain}:3000/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}\n\n"
+printf >&2 "https://${domain}:3000/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agent={{agent.hostname}}\n\n"
 
 
 

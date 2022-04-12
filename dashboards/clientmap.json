@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -23,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 5,
-  "iteration": 1649103527672,
+  "iteration": 1649634372415,
   "links": [
     {
       "asDropdown": false,
@@ -141,7 +144,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 35,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "TRMMClientMap"
@@ -150,9 +153,13 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "postgres",
@@ -184,13 +191,13 @@
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT name FROM clients_site",
+        "definition": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "hide": 0,
         "includeAll": true,
         "multi": false,
         "name": "Sites",
         "options": [],
-        "query": "SELECT name FROM clients_site",
+        "query": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -226,6 +233,6 @@
   "timezone": "",
   "title": "T-RMM Client Map",
   "uid": "7OmubVW7k",
-  "version": 9,
+  "version": 12,
   "weekStart": ""
 }

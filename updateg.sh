@@ -45,12 +45,14 @@ read username
 
 #Get Dashboards
 sudo mkdir /var/lib/grafana/dashboards
-sudo rm /var/lib/grafana/dashboards/sebdash.json
-sudo rm /var/lib/grafana/dashboards/default.json
+sudo mv /var/lib/grafana/dashboards/sebdash.json /var/lib/grafana/dashboards/sebdash.json.back
+sudo mv /var/lib/grafana/dashboards/tvdash.json /var/lib/grafana/dashboards/tvdash.json.back
+sudo mv /var/lib/grafana/dashboards/mapdash.json /var/lib/grafana/dashboards/mapdash.json.back
+sudo mv /var/lib/grafana/dashboards/default.json /var/lib/grafana/dashboards/default.json.back
 sudo chown -R ${username}:${username} /var/lib/grafana/dashboards
 cd /var/lib/grafana/dashboards
-wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/sebdash.json
-wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/tvdash.json
-wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/mapdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/agentdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/clientdash.json
+wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/dashboards/clientmap.json
 
 cd ~/
