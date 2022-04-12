@@ -19,10 +19,15 @@
 9. Go to https://rmm.mydomain.com:3000
 10. Go to dashboards and copy the dashboard to reconfigure how you want it or keep it as default.
 11. Verify T-RMM PostgreSQL datasource has the name TacticalRMM, case sensitive. If not, change it to TacticalRMM if you get datasource errors. Updated dashboards no longer require it to be the default datasource. See image below.
+
 ![Screenshot 2022-04-06 114312-1](https://user-images.githubusercontent.com/24654529/162878388-38c42632-f4b8-487c-b8c8-2e79ffe7f984.png)
+
+12. Edit the TacticalURL and GrafanaURL variables (if present) in the Agent and Client Dashboards to match your T-RMM and Grafana URLs, then reload the dashboards.
+
+![Screenshot 2022-04-12 135410](https://user-images.githubusercontent.com/24654529/163033682-522642e2-2bda-434d-a917-bd1b6f19c684.png)
 ##
-Add URL action to Tactical (correct URL will be shown at the end of the script, make sure port is correct if behind a reverse proxy):
-https://rmm.mydomain.com:3000/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
+Add URL action to Tactical (correct URL will be shown at the end of the script):
+https://rmm.mydomain.com:3000/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agent={{agent.hostname}}
 
 If you change your dashboard or use a custom one you might need to change the UID for the dashboard from pLkA1-inz to whatever its been changed to.
 ##
@@ -41,7 +46,7 @@ secureJsonData:
 If you have errors on some parts of the Dash but the agent count is working you must select an Agent from the top dropdown. This is by design!
 
 1. Go along the top
-2. Find Agents_HostName and select one from the dropdown
+2. Find Agent and select one from the dropdown
 
 Reset Passwords:
 From command line do: `grafana-cli admin reset-admin-password admin`
@@ -64,12 +69,12 @@ From command line do: `grafana-cli admin reset-admin-password admin`
 
 **All dashboards have been updated with links to easily switch between them after initial connection to the Agent dashboard.**
 
-**TacticalRMM Agent Dashboard** - Used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
+**T-RMM Agent Dashboard** - Used for URL actions and Shows CPU, RAM, Disk usage and other stats for the currently selected PC or PC that URL actions was ran on. Please note for the dashboard to display properly you must have cpu, ram and disk checks on your agents.
 
-**TacticalRMM Client Dashboard** - Showing Agent count, Information, Errors, and Warnings, including messages.
+**T-RMM Client Overview Dashboard** - Showing Agent count, Information, Errors, and Warnings, including messages.
 
-**TacticalRMM Map Dashboard:** 
-  * Allows you to display a world map with the position of TRMM agents.
+**T-RMM Client Map Dashboard:** 
+  * Allows you to display a world map with the position of T-RMM agents.
   
   *For use map in Grafana:*  
   In TRMM
@@ -162,15 +167,15 @@ Only use one set of dashboards, you cannot try both sets at the same time withou
  
 **Original Dashboards:**
 
-https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/mapdash.json
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/clientmap.json
 
-https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/sebdash.json
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/agentdash.json
 
-https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/tvdash.json
+https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/clientdash.json
 
 **Alternate Agent Dashboard:**
 
-https://github.com/dinger1986/TRMM-Grafana/blob/main/dashboards/agentdash.json
+https://github.com/dinger1986/TRMM-Grafana/blob/main/alt-trmm-dashboards/agentdash.json
 
 ![Screenshot 2022-04-03 102115](https://user-images.githubusercontent.com/24654529/161435055-d0cb80a8-aad9-4baf-9b74-625ab333023e.png)
 
@@ -184,10 +189,7 @@ Leave the UID and names as they are, and import them. Ignore the complaints in m
 ### Create a URL action for the TacticalRMM Agent dashboard in TacticalRMM Global Settings, only edit the domain to your grafana domain:
 
 Original:
-URL Pattern: https://grafana.domain.tld/d/pLkA1-inz/tacticalrmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
-
-Alternate:
-URL Pattern: https://grafana.domain.tld/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agents_HostName={{agent.hostname}}
+URL Pattern: https://grafana.domain.tld/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agent={{agent.hostname}}
 
 Now you should be able to select a client and run the URL action to open the Grafana T-RMM Agent dashboard and browse to the others via the embedded links.
 
