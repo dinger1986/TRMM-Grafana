@@ -1,0 +1,2704 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 22,
+  "iteration": 1649713385959,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "TRMMClientOverview"
+      ],
+      "targetBlank": false,
+      "title": "T-RMM Client Overview",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "TRMMClientMap"
+      ],
+      "targetBlank": false,
+      "title": "T-RMM Client Map",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 49,
+      "panels": [],
+      "title": "Information of the selected agent",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 57,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": true
+        },
+        "text": {
+          "valueSize": 18
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select \n  concat('Site: ',clients_site.name,' / HostName: ', agents_agent.hostname,' ',agents_agent.DESCRIPTION)\nfrom \n  agents_agent\n  LEFT OUTER JOIN clients_site on agents_agent.site_id = clients_site.id\n  where \n    agents_agent.hostname = '$Agent'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "Connected": {
+                  "color": "dark-green",
+                  "index": 1
+                },
+                "No Connected": {
+                  "color": "dark-red",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            },
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "color": "transparent",
+                  "index": 2
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 2
+      },
+      "id": 53,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 18
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select   \r\nCASE\r\n  WHEN (count(*) = 1) THEN 'Connected'\r\n  WHEN (count(*) = 0) THEN 'Not Connected'\r\n  ELSE ''\r\n END AS modifiedpvc\r\n  \r\n from \r\n  agents_agent\r\n where \r\n   agents_agent.hostname = '$Agent'  and\r\n   last_seen > NOW()- interval '1 hours'\r\n ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 2,
+        "y": 2
+      },
+      "id": 63,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^concat$/",
+          "values": false
+        },
+        "text": {
+          "titleSize": 16,
+          "valueSize": 14
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours ',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes '\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Uptime",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "Track CPU consumption for the selected agent.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 7,
+        "x": 5,
+        "y": 2
+      },
+      "id": 28,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory\r\n  \r\n  WHERE x BETWEEN $__timeFrom() and $__timeTo() --'2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z'\r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='cpuload')\r\n  ORDER BY x",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "CPU Load",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "Track memory consumption for the selected agent.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 6,
+        "x": 12,
+        "y": 2
+      },
+      "id": 29,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n  x BETWEEN $__timeFrom() AND $__timeTo() AND \r\n  check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='memory')\r\n  ORDER BY x",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Memory Usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "Track disk consumption for the selected agent.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.5
+              },
+              {
+                "color": "dark-orange",
+                "value": 10
+              },
+              {
+                "color": "green",
+                "value": 11
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 6,
+        "x": 18,
+        "y": 2
+      },
+      "id": 30,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n   x BETWEEN $__timeFrom() AND $__timeTo() \r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='diskspace')\r\n  ORDER BY x",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Drive Usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "Type of CPU installed",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "index": 0,
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 0,
+        "y": 4
+      },
+      "id": 50,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/^concat$/",
+          "values": true
+        },
+        "text": {
+          "valueSize": 14
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select  \n  wmi_detail,\n  CASE \n    WHEN wmi_detail->'cpu' IS NOT NULL\n    THEN concat(wmi_detail->'cpu'->0->0->>'Name',' \\ ',wmi_detail->'base_board'->0->0->>'Manufacturer')\n    ELSE concat(wmi_detail->'cpus'->>0)\n  END\nfrom \n  agents_agent\nwhere \n   agents_agent.hostname = '$Agent'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "CPU Model",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 0,
+        "y": 6
+      },
+      "id": 44,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^substring$/",
+          "values": true
+        },
+        "text": {
+          "valueSize": 16
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select   \r\nSUBSTRING(agents_agent.operating_system,'(.*)(?:,|x86_64)')\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = '$Agent'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Operating System",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "Windows not up to date": {
+                  "color": "dark-red",
+                  "index": 0
+                },
+                "Windows up to date": {
+                  "color": "dark-green",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 3,
+        "y": 6
+      },
+      "id": 59,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/^status$/",
+          "values": true
+        },
+        "text": {
+          "valueSize": 14
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  CASE\n   WHEN (has_patches_pending = true) THEN 'Windows not up to date'\n    WHEN (has_patches_pending = false) THEN 'Windows up to date'\n  ELSE 'nothing'\n END AS  Status\nFROM \n  agents_agent\nwhere\n     agents_agent.hostname = '$Agent'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "No reboot required": {
+                  "color": "dark-green",
+                  "index": 1
+                },
+                "Reboot required": {
+                  "color": "dark-red",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 2,
+        "x": 3,
+        "y": 7
+      },
+      "id": 61,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/^status$/",
+          "values": true
+        },
+        "text": {
+          "valueSize": 14
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Status\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = '$Agent'\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "Total Agent Memory",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 8
+      },
+      "id": 39,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "System Ram",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "Total free disk space",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 2,
+        "y": 8
+      },
+      "id": 43,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": false
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select \r\n  concat(items.device,'\\ ', items.free,' free on ',items.total)\r\nfrom \r\n  agents_agent,\r\n  jsonb_to_recordset(disks) as items(device text, free text, total text)\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Available Disk Space",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "dark-red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 10
+      },
+      "id": 45,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/^Occupation$/",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'\r\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 47,
+      "panels": [],
+      "title": "Information on Client or selected site",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "Agents at selected clients/sites",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 14
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 48
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(*)\nFROM agents_agent\nwhere \n  site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Agents",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "dark-blue",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 2,
+        "y": 14
+      },
+      "id": 24,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^concat$/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 48
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT CONCAT(\n  (SELECT\n    count(*)\n  FROM\n    alerts_alert\n    LEFT JOIN checks_check on alerts_alert.assigned_check_id = checks_check.id\n    LEFT JOIN autotasks_automatedtask on alerts_alert.assigned_task_id = autotasks_automatedtask.id\n    INNER JOIN agents_agent ON autotasks_automatedtask.agent_id = agents_agent.id\n    OR checks_check.agent_id = agents_agent.id\n    OR alerts_alert.agent_id = agents_agent.id\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\n  WHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)\n    AND alerts_alert.severity = 'info'\n    AND alerts_alert.resolved = false\n  ),\n  ' / ',\n  (SELECT\n    count(*)\n  FROM\n    alerts_alert\n  WHERE\n    alerts_alert.severity = 'info'\n    AND alerts_alert.resolved = false\n  )\n)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Information Alerts",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 8,
+        "x": 8,
+        "y": 14
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^concat$/",
+          "values": false
+        },
+        "text": {
+          "valueSize": 48
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT CONCAT(\n  (SELECT\n    count(*)\n  FROM\n    alerts_alert\n    LEFT JOIN checks_check on alerts_alert.assigned_check_id = checks_check.id\n    LEFT JOIN autotasks_automatedtask on alerts_alert.assigned_task_id = autotasks_automatedtask.id\n    INNER JOIN agents_agent ON autotasks_automatedtask.agent_id = agents_agent.id\n    OR checks_check.agent_id = agents_agent.id\n    OR alerts_alert.agent_id = agents_agent.id\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\n  WHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)\n    AND alerts_alert.severity = 'warning'\n    AND alerts_alert.resolved = false\n  ),\n  ' / ',\n  (SELECT\n    count(*)\n  FROM\n    alerts_alert\n  WHERE\n    alerts_alert.severity = 'warning'\n    AND alerts_alert.resolved = false\n  )\n)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Warning Alerts",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 8,
+        "x": 16,
+        "y": 14
+      },
+      "id": 23,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^concat$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT CONCAT(\n  (SELECT\n    count(*)\n  FROM\n    alerts_alert\n    LEFT JOIN checks_check on alerts_alert.assigned_check_id = checks_check.id\n    LEFT JOIN autotasks_automatedtask on alerts_alert.assigned_task_id = autotasks_automatedtask.id\n    INNER JOIN agents_agent ON autotasks_automatedtask.agent_id = agents_agent.id\n    OR checks_check.agent_id = agents_agent.id\n    OR alerts_alert.agent_id = agents_agent.id\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\n  WHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)\n    AND alerts_alert.severity = 'error'\n    AND alerts_alert.resolved = false\n  ),\n  ' / ',\n  (SELECT\n    count(*)\n  FROM\n    alerts_alert\n  WHERE\n    alerts_alert.severity = 'error'\n    AND alerts_alert.resolved = false\n  )\n)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Error Alerts",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "64 Bit"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 149
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 0,
+        "y": 17
+      },
+      "id": 18,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "  select (\r\nSELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '64' and\r\n  site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"64 Bit\",\r\n\r\n  (SELECT\r\n  count(*)\r\n  FROM agents_agent\r\nWhere\r\n  SUBSTRING(agents_agent.operating_system,POSITION(',' in agents_agent.operating_system)+2,2) = '32' and\r\n   site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites))) and\r\n  site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))) as \"32 Bit\" ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "OS Distribution",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "List all OS installed",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Operating System"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 293
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 4,
+        "y": 17
+      },
+      "id": 26,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  count(*) as \"count\",\r\n  SUBSTRING(agents_agent.operating_system,'(.*)(?:,|x86_64)') AS \"Operating System\"\r\nFROM agents_agent\r\n  INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\r\n  INNER JOIN clients_client ON clients_site.client_id = clients_client.id\r\nWHERE\r\n  clients_client.name IN ($Client)\r\n  AND clients_site.name IN ($Sites)\r\nGroup by \"Operating System\"\r\nOrder by \"count\" desc\r\n  ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "OS Type",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Operating System": 0,
+              "count": 1
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 377
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 10,
+        "y": 17
+      },
+      "id": 54,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \n    count(*) as \"count\",\n    (CASE \n      WHEN wmi_detail->'cpu' IS NOT NULL\n      THEN SUBSTRING(agents_agent.wmi_detail->'cpu'->0->0->>'Name','(?:AMD|Intel\\(R\\)|Intel)(.*)(?:@|Processor|with)')\n      ELSE SUBSTRING(agents_agent.wmi_detail->'cpus'->>0,'(?:AMD|Intel\\(R\\)|Intel)(.*)(?:@|Processor|with)')\n    END) as \"CPU Name\"\nFROM agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n  clients_client.name IN ($Client)\n  AND clients_site.name IN ($Sites)\nGroup by \"CPU Name\"\nOrder by \"count\" desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Type of CPUs",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "CPU Name": 0,
+              "count": 1
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "List all installed memory",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-green",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Size Memory"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 377
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 17,
+        "y": 17
+      },
+      "id": 55,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "  SELECT \r\n  count(*) as \"count\",\r\n  concat((total_ram),' GB') as \"Size Memory\"\r\n  FROM agents_agent\r\nINNER JOIN clients_site on site_id = clients_site.id\r\nWHERE site_id IN (SELECT id FROM clients_site WHERE client_id IN (SELECT id FROM clients_client WHERE name IN ($Client)))\r\nAND site_id IN (SELECT id FROM clients_site WHERE site_id IN (SELECT id FROM clients_site WHERE name IN ($Sites)))\r\nGroup by \"Size Memory\"\r\nOrder by \"count\" desc\r\n  ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Installed System RAM",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Size Memory": 0,
+              "count": 1
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "color-background-solid",
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "Offline": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "X"
+                },
+                "Online": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "O"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Site"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 125
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last Reboot"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 195
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last Response"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 195
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Hostname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 135
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RMM"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 50
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Open RMM",
+                    "url": "https://${TacticalURL}/agents/${__data.fields.agent_id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "image"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Stats"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 50
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "image"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": false,
+                    "title": "Agent Dashboard",
+                    "url": "https://${GrafanaURL}/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Agent=${__data.fields.Hostname}﻿&var-Sites=﻿${__data.fields.Site}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 87
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 11,
+        "x": 0,
+        "y": 25
+      },
+      "id": 14,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \n  clients_site.name AS \"Site\",\n  hostname AS \"Hostname\",\n  agents_agent.agent_id,\n  'https://docs.tacticalrmm.com/images/favicon.ico' as \"RMM\",\n  'https://grafana.com/static/assets/img/fav32.png' as \"Stats\",\n  (\n        CASE\n            WHEN last_seen > NOW() - interval '1 minute' THEN 'Online'\n            ELSE 'Offline'\n        END\n    ) AS \"Status\",\n  last_seen as \"Last Response\",\n  to_timestamp(boot_time) AS \"Last Reboot\"\nFROM agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Agent Status",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${Tactical}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Date"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 155
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_id"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RMM"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 45
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Open RMM",
+                    "url": "https://${TacticalURL}/agents/${__data.fields.agent_id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "image"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Message"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 787
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 13,
+        "x": 11,
+        "y": 25
+      },
+      "id": 33,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "v1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${Tactical}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \n    alerts_alert.alert_time as \"Date\",\n    alerts_alert.message as \"Message\",\n    agents_agent.agent_id,\n    'https://docs.tacticalrmm.com/images/favicon.ico' as \"RMM\"\nFROM alerts_alert\n    LEFT JOIN checks_check on alerts_alert.assigned_check_id = checks_check.id\n    LEFT JOIN autotasks_automatedtask on alerts_alert.assigned_task_id = autotasks_automatedtask.id\n    INNER JOIN agents_agent ON autotasks_automatedtask.agent_id = agents_agent.id\n                            OR checks_check.agent_id = agents_agent.id\n                            OR alerts_alert.agent_id = agents_agent.id\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n  clients_client.name IN ($Client)\n  AND clients_site.name IN ($Sites)\n  AND alerts_alert.severity = 'error' \n  AND alerts_alert.resolved = false",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "boot_time"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "agents_agent",
+          "timeColumn": "last_seen",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Error Messages",
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [
+    "TRMMAgentDashboard"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
+        "definition": "SELECT name FROM clients_client",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Client",
+        "multi": false,
+        "name": "Client",
+        "options": [],
+        "query": "SELECT name FROM clients_client",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
+        "definition": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Site",
+        "multi": false,
+        "name": "Sites",
+        "options": [],
+        "query": "SELECT\n    clients_site.name\nFROM\n    clients_site\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "${Tactical}"
+        },
+        "definition": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Agent",
+        "multi": false,
+        "name": "Agent",
+        "options": [],
+        "query": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "TacticalRMM",
+          "value": "TacticalRMM"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "Tactical",
+        "options": [],
+        "query": "postgres",
+        "refresh": 1,
+        "regex": "TacticalRMM",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "rmm.example.com",
+          "value": "rmm.example.com"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "TacticalURL",
+        "options": [
+          {
+            "selected": false,
+            "text": "rmm.example.com",
+            "value": "rmm.example.com"
+          }
+        ],
+        "query": "rmm.example.com",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "grafana.example.com",
+          "value": "grafana.example.com"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "GrafanaURL",
+        "options": [
+          {
+            "selected": false,
+            "text": "grafana.example.com",
+            "value": "grafana.example.com"
+          }
+        ],
+        "query": "grafana.example.com",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-12h",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": false
+  },
+  "timezone": "",
+  "title": "T-RMM Agent Dashboard",
+  "uid": "pLkA1-inz",
+  "version": 5,
+  "weekStart": ""
+}
