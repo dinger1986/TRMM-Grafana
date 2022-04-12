@@ -99,14 +99,14 @@ networks:
 Either assign the IP manually to what it is currently assigned or use an env variable.
 
 ##
-### Edit Grafana docker-compose to add tactical api network
+### Edit Grafana docker-compose to add tacticalrmm_api-db network
 
-Under network definitions:
+Under network definitions add tacticalrmm_api-db network:
 ```text
 tacticalrmm_api-db:
   external: true
 ```
-In the grafana service definition:
+In the grafana service definition ensure IP address is assigned to Grafana and add the tacticalrmm_api-db network:
 ```text
 networks:
   monitor-net:
