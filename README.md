@@ -188,7 +188,6 @@ Leave the UID and names as they are, and import them. Ignore the complaints in m
 ##
 ### Create a URL action for the TacticalRMM Agent dashboard in TacticalRMM Global Settings, only edit the domain to your grafana domain:
 
-Original:
 URL Pattern: https://grafana.domain.tld/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agent={{agent.hostname}}
 
 Now you should be able to select a client and run the URL action to open the Grafana T-RMM Agent dashboard and browse to the others via the embedded links.
