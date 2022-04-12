@@ -1,19 +1,19 @@
 # TRMM-Grafana Setup methods:
 ###
 
-## [Baremetal:](#trmm-grafana-basic-baremetal-setup)
+## [Baremetal](#trmm-grafana-basic-baremetal-setup)
 
-## [Docker:](#docker-setup)
+## [Docker](#docker-setup)
 
 ###
 # Dashboard Info:
 ###
 
-## [Current Dashboards:](#current-dashboards)
+## [Current Dashboards](#current-dashboards-1)
 
-## [Updating Dashboards:](#updating-dashboards)
+## [Updating Dashboards](#updating-dashboards-1)
 
-## [Dashboard Images and Links:](#dashboard-images-and-links)
+## [Dashboard Images and Links](#dashboard-images-and-links-1)
 
 ###
 # TRMM-Grafana Basic baremetal setup:
