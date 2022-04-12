@@ -46,6 +46,8 @@ read username
 #Get Dashboards
 sudo mkdir /var/lib/grafana/dashboards
 sudo mv /var/lib/grafana/dashboards/sebdash.json /var/lib/grafana/dashboards/sebdash.json.back
+sudo mv /var/lib/grafana/dashboards/tvdash.json /var/lib/grafana/dashboards/tvdash.json.back
+sudo mv /var/lib/grafana/dashboards/mapdash.json /var/lib/grafana/dashboards/mapdash.json.back
 sudo mv /var/lib/grafana/dashboards/default.json /var/lib/grafana/dashboards/default.json.back
 sudo chown -R ${username}:${username} /var/lib/grafana/dashboards
 cd /var/lib/grafana/dashboards
