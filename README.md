@@ -38,6 +38,7 @@
 ![Screenshot 2022-04-12 135410](https://user-images.githubusercontent.com/24654529/163033682-522642e2-2bda-434d-a917-bd1b6f19c684.png)
 ##
 Add URL action to Tactical (correct URL will be shown at the end of the script):
+
 https://rmm.mydomain.com:3000/d/pLkA1-inz/t-rmm-agent-dashboard?orgId=1&var-Client={{client.name}}&var-Sites={{site.name}}&var-Agent={{agent.hostname}}
 
 If you change your dashboard or use a custom one you might need to change the UID for the dashboard from pLkA1-inz to whatever its been changed to.
@@ -47,20 +48,28 @@ If you change your dashboard or use a custom one you might need to change the UI
 If you need to rerun the script the only thing that will need redone is changing the postgres dbreader password 
 to the same as is in /etc/grafana/provisioning/datasources/default.yaml
 
-1. To do this type in nano /etc/grafana/provisioning/datasources/default.yaml
+1. To do this type:
+```text
+nano /etc/grafana/provisioning/datasources/default.yaml
+```
 2. Copy password under: 
 secureJsonData:
   password: ""
-3. Replace the password for dbreader for postgres with the following command
-4. sudo -u postgres psql tacticalrmm -c "ALTER USER dbreader WITH PASSWORD 'new_password';"
-
+3. Replace the password for dbreader for postgres with the following command:
+```text
+sudo -u postgres psql tacticalrmm -c "ALTER USER dbreader WITH PASSWORD 'new_password';"
+```
 If you have errors on some parts of the Dash but the agent count is working you must select an Agent from the top dropdown. This is by design!
 
 1. Go along the top
 2. Find Agent and select one from the dropdown
 
-Reset Passwords:
-From command line do: `grafana-cli admin reset-admin-password admin`
+**Reset Passwords:**
+
+From command line:
+```text
+grafana-cli admin reset-admin-password admin
+```
 
 ##
 
@@ -129,10 +138,15 @@ exit
 Add postgresql data source to Grafana (for now use the tactical user and pass in t-rmm docker-compose config). Edit to suit your configuration, but the Name field MUST be TacticalRMM:
 
 Name: TacticalRMM
+
 Host: postgres-ip:5432
+
 Database: tacticalrmm
+
 User: dbreader
+
 Password: dbreaderpass
+
 Disable TLS/SSL and “Save & test”
 
 ![Screenshot 2022-04-06 114312](https://user-images.githubusercontent.com/24654529/162025454-19f4a86d-732b-4d76-b2f8-ad38d07e386d.png)
@@ -140,9 +154,10 @@ Disable TLS/SSL and “Save & test”
 ##
 ### Add dashboards to Grafana
 Open your Grafana instance in your browser.
+
 Begin importing the new dashboards by copying and pasting the json code for each, or downloading the files and importing the jsons directly.
 
-Only use one set of dashboards, you cannot try both sets at the same time without editing the UIDs for one of the sets.
+You can use more than one Agent dashboard, but you must edit the UID and Name for the additional agent dashboards. Fast switching between dashes will still work, and the additional dashboards will be available via link from the Client Overview and Client Map dashboards.
  
 **Original Dashboards:**
 
