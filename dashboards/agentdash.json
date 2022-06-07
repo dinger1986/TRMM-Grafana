@@ -456,7 +456,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory\r\n  \r\n  WHERE x BETWEEN $__timeFrom() and $__timeTo() --'2021-07-01T13:54:25.526Z' AND '2100-07-02T19:54:25.526Z'\r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='cpuload')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='cpuload'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -573,7 +573,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n  x BETWEEN $__timeFrom() AND $__timeTo() AND \r\n  check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='memory')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='cpuload'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
           "refId": "A",
           "select": [
             [
@@ -696,7 +696,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\nFROM \r\n  checks_checkhistory\r\nWHERE \r\n   x BETWEEN $__timeFrom() AND $__timeTo() \r\n  AND check_id IN (SELECT id FROM checks_check WHERE agent_id=(SELECT id FROM agents_agent where agents_agent.hostname = '$Agent') AND check_type='diskspace')\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='diskspace'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
           "refId": "A",
           "select": [
             [
@@ -978,7 +978,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  CASE\n   WHEN (has_patches_pending = true) THEN 'Windows not up to date'\n    WHEN (has_patches_pending = false) THEN 'Windows up to date'\n  ELSE 'nothing'\n END AS  Status\nFROM \n  agents_agent\nwhere\n     agents_agent.hostname = '$Agent'",
+          "rawSql": "SELECT \r\n\tCASE\r\n\t\tWHEN (COUNT(installed)>0) THEN 'Windows not up to date'\r\n\t\tWHEN (COUNT(installed)=0) THEN 'Windows up to date'\r\n\tELSE 'nothing'\r\n\tEND AS Status\r\n\tFROM winupdate_winupdate,agents_agent\r\n\tWHERE winupdate_winupdate.agent_id=agents_agent.id\r\n\t\tAND installed='f'\r\n\t\tAND agents_agent.hostname='$Agent'",
           "refId": "A",
           "select": [
             [
