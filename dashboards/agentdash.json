@@ -573,7 +573,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='cpuload'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='memory'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
           "refId": "A",
           "select": [
             [
