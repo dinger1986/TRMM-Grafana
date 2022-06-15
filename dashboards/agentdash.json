@@ -24,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 22,
-  "iteration": 1649713385959,
+  "id": 3,
+  "iteration": 1655321446387,
   "links": [
     {
       "asDropdown": false,
@@ -90,8 +90,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -126,7 +125,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -137,7 +136,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select \n  concat('Site: ',clients_site.name,' / HostName: ', agents_agent.hostname,' ',agents_agent.DESCRIPTION)\nfrom \n  agents_agent\n  LEFT OUTER JOIN clients_site on agents_agent.site_id = clients_site.id\n  where \n    agents_agent.hostname = '$Agent'",
+          "rawSql": "select \n  concat('Site: ',clients_site.name,' / HostName: ', agents_agent.hostname,' ',agents_agent.DESCRIPTION)\nfrom \n  agents_agent\n  LEFT OUTER JOIN clients_site on agents_agent.site_id = clients_site.id\n  where \n    agents_agent.agent_id = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -202,8 +201,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -236,7 +234,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -247,7 +245,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\nCASE\r\n  WHEN (count(*) = 1) THEN 'Connected'\r\n  WHEN (count(*) = 0) THEN 'Not Connected'\r\n  ELSE ''\r\n END AS modifiedpvc\r\n  \r\n from \r\n  agents_agent\r\n where \r\n   agents_agent.hostname = '$Agent'  and\r\n   last_seen > NOW()- interval '1 hours'\r\n ",
+          "rawSql": "select   \r\nCASE\r\n  WHEN (count(*) = 1) THEN 'Connected'\r\n  WHEN (count(*) = 0) THEN 'Not Connected'\r\n  ELSE ''\r\n END AS modifiedpvc\r\n  \r\n from \r\n  agents_agent\r\n where \r\n   agents_agent.agent_id = '$Agent'  and\r\n   last_seen > NOW()- interval '1 hours'\r\n ",
           "refId": "A",
           "select": [
             [
@@ -288,8 +286,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
-                "value": null
+                "color": "text"
               },
               {
                 "color": "red",
@@ -325,7 +322,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -336,7 +333,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours ',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes '\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
+          "rawSql": "SELECT \r\n  concat(\r\n          to_char(now() - to_timestamp(boot_time) ,'DD' ),' Days ', \r\n          to_char(now() - to_timestamp(boot_time),'HH24' ), ' Hours ',\r\n          to_char(now() - to_timestamp(boot_time),'MI' ), ' Minutes '\r\n        )\r\nFrom \r\n  agents_agent\r\nWhere\r\n  agents_agent.agent_id = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -411,8 +408,7 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "#EAB839",
@@ -456,7 +452,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='cpuload'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"CPU Load\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.agent_id='$Agent' AND checks_check.check_type='cpuload'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x",
           "refId": "A",
           "select": [
             [
@@ -528,8 +524,7 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "dark-orange",
@@ -573,7 +568,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='memory'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Memory Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.agent_id='$Agent' AND checks_check.check_type='memory'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
           "refId": "A",
           "select": [
             [
@@ -647,8 +642,7 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "dark-red",
@@ -696,7 +690,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.hostname='$Agent' AND checks_check.check_type='diskspace'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
+          "rawSql": "SELECT \r\n  x AS \"time\",\r\n  y as \"Disk Usage\"\r\n  FROM checks_checkhistory, checks_check, agents_agent\r\n  WHERE checks_checkhistory.agent_id=agents_agent.agent_id AND checks_checkhistory.check_id=checks_check.id\r\n    AND agents_agent.agent_id='$Agent' AND checks_check.check_type='diskspace'\r\n    AND x BETWEEN $__timeFrom() and $__timeTo()\r\n  ORDER BY x\r\n",
           "refId": "A",
           "select": [
             [
@@ -750,8 +744,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
-                "value": null
+                "color": "text"
               }
             ]
           }
@@ -780,7 +773,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -791,7 +784,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select  \n  wmi_detail,\n  CASE \n    WHEN wmi_detail->'cpu' IS NOT NULL\n    THEN concat(wmi_detail->'cpu'->0->0->>'Name',' \\ ',wmi_detail->'base_board'->0->0->>'Manufacturer')\n    ELSE concat(wmi_detail->'cpus'->>0)\n  END\nfrom \n  agents_agent\nwhere \n   agents_agent.hostname = '$Agent'",
+          "rawSql": "select  \n  wmi_detail,\n  CASE \n    WHEN wmi_detail->'cpu' IS NOT NULL\n    THEN concat(wmi_detail->'cpu'->0->0->>'Name',' \\ ',wmi_detail->'base_board'->0->0->>'Manufacturer')\n    ELSE concat(wmi_detail->'cpus'->>0)\n  END\nfrom \n  agents_agent\nwhere \n   agents_agent.agent_id = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -834,8 +827,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
-                "value": null
+                "color": "text"
               }
             ]
           }
@@ -866,7 +858,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -877,7 +869,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\nSUBSTRING(agents_agent.operating_system,'(.*)(?:,|x86_64)')\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.hostname = '$Agent'",
+          "rawSql": "select   \r\nSUBSTRING(agents_agent.operating_system,'(.*)(?:,|x86_64)')\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n     agents_agent.agent_id = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -933,8 +925,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -967,7 +958,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -978,7 +969,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \r\n\tCASE\r\n\t\tWHEN (COUNT(installed)>0) THEN 'Windows not up to date'\r\n\t\tWHEN (COUNT(installed)=0) THEN 'Windows up to date'\r\n\tELSE 'nothing'\r\n\tEND AS Status\r\n\tFROM winupdate_winupdate,agents_agent\r\n\tWHERE winupdate_winupdate.agent_id=agents_agent.id\r\n\t\tAND installed='f'\r\n\t\tAND agents_agent.hostname='$Agent'",
+          "rawSql": "SELECT \r\n\tCASE\r\n\t\tWHEN (COUNT(installed)>0) THEN 'Windows not up to date'\r\n\t\tWHEN (COUNT(installed)=0) THEN 'Windows up to date'\r\n\tELSE 'nothing'\r\n\tEND AS Status\r\n\tFROM winupdate_winupdate,agents_agent\r\n\tWHERE winupdate_winupdate.agent_id=agents_agent.id\r\n\t\tAND installed='f'\r\n\t\tAND agents_agent.agent_id='$Agent'",
           "refId": "A",
           "select": [
             [
@@ -1033,8 +1024,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1067,7 +1057,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1078,7 +1068,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Status\nFrom \n  agents_agent\nWhere\n  agents_agent.hostname = '$Agent'\n",
+          "rawSql": "select\n  CASE\n   WHEN (agents_agent.needs_reboot = true) THEN 'Reboot required'\n    WHEN (agents_agent.needs_reboot = false) THEN 'No reboot required'\n  ELSE 'nothing'\n END AS  Status\nFrom \n  agents_agent\nWhere\n  agents_agent.agent_id = '$Agent'\n",
           "refId": "A",
           "select": [
             [
@@ -1120,8 +1110,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
-                "value": null
+                "color": "text"
               }
             ]
           }
@@ -1150,7 +1139,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1161,7 +1150,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'",
+          "rawSql": "select   \r\n   concat((total_ram),'GB / ',concat(wmi_detail->'mem'->0->0->>'Speed','MHz'))\r\n  \r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.agent_id = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -1209,8 +1198,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
-                "value": null
+                "color": "text"
               }
             ]
           }
@@ -1234,7 +1222,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1245,7 +1233,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select \r\n  concat(items.device,'\\ ', items.free,' free on ',items.total)\r\nfrom \r\n  agents_agent,\r\n  jsonb_to_recordset(disks) as items(device text, free text, total text)\r\nWhere\r\n  agents_agent.hostname = '$Agent'",
+          "rawSql": "select \r\n  concat(items.device,'\\ ', items.free,' free on ',items.total)\r\nfrom \r\n  agents_agent,\r\n  jsonb_to_recordset(disks) as items(device text, free text, total text)\r\nWhere\r\n  agents_agent.agent_id = '$Agent'",
           "refId": "A",
           "select": [
             [
@@ -1288,8 +1276,7 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "dark-green",
-                "value": null
+                "color": "dark-green"
               },
               {
                 "color": "#EAB839",
@@ -1323,7 +1310,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1334,7 +1321,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.hostname = '$Agent'\r\n",
+          "rawSql": "select\r\n  disks->0->>'percent' as \"Occupation\"\r\nfrom \r\n  agents_agent\r\nwhere \r\n  agents_agent.agent_id = '$Agent'\r\n",
           "refId": "A",
           "select": [
             [
@@ -1393,8 +1380,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1425,7 +1411,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1478,8 +1464,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "dark-blue",
@@ -1514,7 +1499,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1567,8 +1552,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "yellow",
@@ -1603,7 +1587,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1657,8 +1641,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               },
               {
                 "color": "red",
@@ -1691,7 +1674,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1749,8 +1732,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1793,7 +1775,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1853,8 +1835,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -1892,7 +1873,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -1965,8 +1946,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -2004,7 +1984,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -2077,8 +2057,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           }
@@ -2115,7 +2094,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -2203,8 +2182,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": null
+                "color": "transparent"
               }
             ]
           }
@@ -2354,7 +2332,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -2412,8 +2390,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2505,7 +2482,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "v1.0",
+      "pluginVersion": "9.0.0-beta2",
       "targets": [
         {
           "datasource": {
@@ -2606,21 +2583,21 @@
       {
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "ATC-LT-10(Arctic Traveler/Main)",
+          "value": "dulQBYmodXIpCduOHJIPJFdYASHkpGSqJijBAXLK"
         },
         "datasource": {
           "type": "postgres",
           "uid": "${Tactical}"
         },
-        "definition": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
+        "definition": "SELECT\n    agents_agent.hostname || '(' || clients_client.name || '/' || clients_site.name || ')' AS __text,\n    agents_agent.agent_id AS __value\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
         "hide": 0,
         "includeAll": false,
         "label": "Agent",
         "multi": false,
         "name": "Agent",
         "options": [],
-        "query": "SELECT\n    agents_agent.hostname\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
+        "query": "SELECT\n    agents_agent.hostname || '(' || clients_client.name || '/' || clients_site.name || ')' AS __text,\n    agents_agent.agent_id AS __value\nFROM\n    agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n    clients_client.name IN ($Client)\n    AND clients_site.name IN ($Sites)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2656,7 +2633,7 @@
         "name": "TacticalURL",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "rmm.example.com",
             "value": "rmm.example.com"
           }
@@ -2678,7 +2655,7 @@
         "name": "GrafanaURL",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "grafana.example.com",
             "value": "grafana.example.com"
           }
@@ -2699,6 +2676,6 @@
   "timezone": "",
   "title": "T-RMM Agent Dashboard",
   "uid": "pLkA1-inz",
-  "version": 5,
+  "version": 9,
   "weekStart": ""
 }
