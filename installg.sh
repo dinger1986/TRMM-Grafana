@@ -1076,6 +1076,9 @@ EOF
 )"
 echo "${grafanaini}" > /etc/grafana/grafana.ini
 
+sudo sed -i "s|GRAFANA_USER=grafana|GRAFANA_USER=${username}|g" /etc/init.d/grafana-server
+sudo sed -i "s|GRAFANA_GROUP=grafana|GRAFANA_GROUP=${username}|g" /etc/init.d/grafana-server
+
 sudo systemctl daemon-reload
 sudo systemctl stop grafana-server
 sudo systemctl start grafana-server
