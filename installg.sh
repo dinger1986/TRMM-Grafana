@@ -1076,7 +1076,7 @@ EOF
 )"
 echo "${grafanaini}" > /etc/grafana/grafana.ini
 
-cp /etc/letsencrypt/live/${certdomain}/*.pem /etc/grafana/
+sudo cp /etc/letsencrypt/live/${certdomain}/*.pem /etc/grafana/
 sudo chown root:grafana /etc/grafana/*.pem
 
 sudo systemctl daemon-reload
