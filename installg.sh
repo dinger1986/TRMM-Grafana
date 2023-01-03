@@ -217,8 +217,8 @@ domain = ${domain}
 # enable gzip
 ;enable_gzip = false
 # https certs & key file
-cert_file = /etc/letsencrypt/live/${certdomain}/fullchain.pem
-cert_key = /etc/letsencrypt/live/${certdomain}/privkey.pem
+cert_file = /etc/grafana/fullchain.pem
+cert_key = /etc/grafana/privkey.pem
 
 # Unix socket path
 ;socket =
@@ -1076,8 +1076,8 @@ EOF
 )"
 echo "${grafanaini}" > /etc/grafana/grafana.ini
 
-sudo sed -i "s|GRAFANA_USER=grafana|GRAFANA_USER=${username}|g" /etc/init.d/grafana-server
-sudo sed -i "s|GRAFANA_GROUP=grafana|GRAFANA_GROUP=${username}|g" /etc/init.d/grafana-server
+cp /etc/letsencrypt/live/${certdomain}/*.pem /etc/grafana/
+sudo chown root:grafana /etc/grafana/*.pem
 
 sudo systemctl daemon-reload
 sudo systemctl stop grafana-server
