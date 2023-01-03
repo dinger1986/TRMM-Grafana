@@ -21,9 +21,9 @@
 
 1. Swap to user setup for tactical rmm - e.g. su tactical
 2. Go to home - cd ~/
-3. wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/installg.sh
-4. chmod +x installg.sh
-5. ./installg.sh
+3. `wget https://raw.githubusercontent.com/dinger1986/TRMM-Grafana/main/installg.sh`
+4. `chmod +x installg.sh`
+5. `./installg.sh`
 6. Enter your username (the linux user that was used to install tactical, the same user as step 1 hopefully).
 7. Enter the domain for the frontend e.g. rmm.mydomain.com
 8. Enter your full domain e.g. mydomain.com
@@ -69,6 +69,17 @@ If you have errors on some parts of the Dash but the agent count is working you 
 From command line:
 ```text
 grafana-cli admin reset-admin-password admin
+```
+
+**SSL Cert Expired:**
+
+For some reason grafana doesnt play nice with Certs which dont have grafana access to them
+
+When isntalled it will copy your scripts, if your scritps expire run the following commands:
+```text
+sudo cp /etc/letsencrypt/live/${certdomain}/*.pem /etc/grafana/
+sudo chown root:grafana /etc/grafana/*.pem
+sudo systemctl restart grafana-server
 ```
 
 ##
