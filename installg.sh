@@ -1078,6 +1078,7 @@ echo "${grafanaini}" > /etc/grafana/grafana.ini
 
 sudo cp /etc/letsencrypt/live/${certdomain}/*.pem /etc/grafana/
 sudo chown root:grafana /etc/grafana/*.pem
+sudo chmod 644 /etc/grafana/privkey.pem
 
 sudo systemctl daemon-reload
 sudo systemctl stop grafana-server
