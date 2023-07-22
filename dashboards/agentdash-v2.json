@@ -2077,7 +2077,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT \n    count(*) as \"count\",\n    (CASE \n      WHEN wmi_detail->'cpu' IS NOT NULL\n      THEN SUBSTRING(agents_agent.wmi_detail->'cpu'->0->0->>'Name','(?:AMD|Intel\\(R\\)|Intel)(.*)(?:@|Processor|with)')\n      ELSE SUBSTRING(agents_agent.wmi_detail->'cpus'->>0,'(?:AMD|Intel\\(R\\)|Intel)(.*)(?:@|Processor|with)')\n    END) as \"CPU Name\"\nFROM agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n  clients_client.name IN ($Client)\n  AND clients_site.name IN ($Sites)\nGroup by \"CPU Name\"\nOrder by \"count\" desc",
+          "rawSql": "SELECT \n    count(*) as \"count\",\n    (CASE \n      WHEN wmi_detail->'cpu' IS NOT NULL\n      THEN SUBSTRING(agents_agent.wmi_detail->'cpu'->0->0->>'Name','(?:AMD|\d\dth Gen Intel\(R\)||Intel\(R\)|Intel)(.*)(?:@|Processor||with)')\n      ELSE SUBSTRING(agents_agent.wmi_detail->'cpus'->>0,'(?:AMD|\d\dth Gen Intel\(R\)||Intel\(R\)|Intel)(.*)(?:@|Processor||with)')\n    END) as \"CPU Name\"\nFROM agents_agent\n    INNER JOIN clients_site ON agents_agent.site_id = clients_site.id\n    INNER JOIN clients_client ON clients_site.client_id = clients_client.id\nWHERE\n  clients_client.name IN ($Client)\n  AND clients_site.name IN ($Sites)\nGroup by \"CPU Name\"\nOrder by \"count\" desc",
           "refId": "A",
           "select": [
             [
