@@ -11,7 +11,7 @@ relno=$(lsb_release -sr | cut -d. -f1)
 fullrelno=$(lsb_release -sr)
 
 # Fallback if lsb_release -si returns anything else than Ubuntu, Debian or Raspbian
-if [ ! "$osname" = "ubuntu" ] && [ ! "$osname" = "debian" ]; then
+if [ ! "$osname" = "Ubuntu" ] && [ ! "$osname" = "debian" ]; then
   osname=$(grep -oP '(?<=^ID=).+' /etc/os-release | tr -d '"')
   osname=${osname^}
   else
