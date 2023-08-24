@@ -125,6 +125,7 @@ EOF
 echo "${dashconf}" > /etc/grafana/provisioning/dashboards/default.yaml
 
 #Get Dashboards
+sudo mkdir /var/lib/grafana
 sudo mkdir /var/lib/grafana/dashboards
 sudo mv /var/lib/grafana/dashboards/sebdash.json /var/lib/grafana/dashboards/sebdash.json.back
 sudo mv /var/lib/grafana/dashboards/default.json /var/lib/grafana/dashboards/default.json.back
