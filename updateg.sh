@@ -44,6 +44,7 @@ echo -ne "Enter your created username if you havent done this please do it now, 
 read username
 
 #Get Dashboards
+sudo mkdir /var/lib/grafana
 sudo mkdir /var/lib/grafana/dashboards
 sudo mv /var/lib/grafana/dashboards/sebdash.json /var/lib/grafana/dashboards/sebdash.json.back
 sudo mv /var/lib/grafana/dashboards/tvdash.json /var/lib/grafana/dashboards/tvdash.json.back
