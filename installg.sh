@@ -2,6 +2,25 @@
 
 #### Just scripted up to work from @Yasd and @sebcashmag on Discord forum
 
+#check if running on ubuntu 20.04, Debian or Raspbian
+osname=$(lsb_release -si); osname=${osname^}
+osname=$(echo "$osname" | tr  '[A-Z]' '[a-z]')
+fullrel=$(lsb_release -sd)
+codename=$(lsb_release -sc)
+relno=$(lsb_release -sr | cut -d. -f1)
+fullrelno=$(lsb_release -sr)
+
+# Fallback if lsb_release -si returns anything else than Ubuntu, Debian or Raspbian
+if [ ! "$osname" = "ubuntu" ] && [ ! "$osname" = "debian" ]; then
+  osname=$(grep -oP '(?<=^ID=).+' /etc/os-release | tr -d '"')
+  osname=${osname^}
+  else
+ echo $fullrel
+ echo -ne "${RED}Only Ubuntu and Debian are supported\n"
+ echo -ne "Your system does not appear to be supported${NC}\n"
+ exit 1
+fi
+
 #check if running as root
 if [ $EUID -eq 0 ]; then
   echo -ne "\033[0;31mDo NOT run this script as root. Exiting.\e[0m\n"
