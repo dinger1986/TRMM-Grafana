@@ -2,37 +2,6 @@
 
 #### Just scripted up to work from @Yasd and @sebcashmag on Discord forum
 
-
-#check if running on ubuntu 20.04, Debian or Raspbian
-osname=$(lsb_release -si); osname=${osname^}
-osname=$(echo "$osname" | tr  '[A-Z]' '[a-z]')
-fullrel=$(lsb_release -sd)
-codename=$(lsb_release -sc)
-relno=$(lsb_release -sr | cut -d. -f1)
-fullrelno=$(lsb_release -sr)
-
-# Fallback if lsb_release -si returns anything else than Ubuntu, Debian or Raspbian
-if [ ! "$osname" = "ubuntu" ] && [ ! "$osname" = "debian" ]; then
-  osname=$(grep -oP '(?<=^ID=).+' /etc/os-release | tr -d '"')
-  osname=${osname^}
-fi
-
-
-# determine system
-if ([ "$osname" = "ubuntu" ] && [ "$fullrelno" = "20.04" ]) || ([ "$osname" = "debian" ] && [ $relno -ge 10 ]); then
-  echo $fullrel
-else
- echo $fullrel
- echo -ne "${RED}Only Ubuntu release 20.04 and Debian 10 and later, are supported\n"
- echo -ne "Your system does not appear to be supported${NC}\n"
- exit 1
-fi
-
-if [ $EUID -eq 0 ]; then
-  echo -ne "${RED}Do NOT run this script as root. Exiting.${NC}\n"
-  exit 1
-fi
-
 #check if running as root
 if [ $EUID -eq 0 ]; then
   echo -ne "\033[0;31mDo NOT run this script as root. Exiting.\e[0m\n"
@@ -71,11 +40,10 @@ sudo ufw reload
 
 sudo apt-get install -y apt-transport-https
 sudo apt-get install -y software-properties-common wget
-wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+wget -q -O - https://packages.grafana.com/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/grafana.gpg > /dev/null
 
 # add the repository for the latest stable OSS release
-echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
-
+echo "deb [signed-by=/usr/share/keyrings/grafana.gpg] https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
 sudo apt-get update
 sudo apt-get install grafana
 
